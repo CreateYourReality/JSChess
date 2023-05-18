@@ -116,6 +116,10 @@ i{
     color:green;
 }
 
+.chessField:nth-child(n+1):nth-child(-n+64).canAttack {
+    background-color: red;
+    color:green;
+}
 
 
 

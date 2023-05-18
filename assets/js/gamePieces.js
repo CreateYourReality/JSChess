@@ -1,126 +1,222 @@
-const Pawn = [
+
+
+
+/*
+König - King.
+Dame - Queen.
+Turm - Rook.
+Läufer - Bishop.
+Springer - Knight.
+Bauer - Pawn. 
+*/
+
+const GamePiece = [
+
+  Bishop = [
+  {
+    tower:'<i id="wBishop1" draggable="true" ondragstart="drag(event)"class="las la-chess-bishop"></i>',
+    id:"wBishop1",
+    canWalk:"cross",
+    canAttack:"cross",
+  },
+  {
+    tower:'<i id="wBishop2" draggable="true" ondragstart="drag(event)"class="las la-chess-bishop"></i>',
+    id:"wBishop2",
+    canWalk:"cross",
+    canAttack:"cross",
+  },
+  {
+    tower:'<i id="bBishop1" draggable="true" ondragstart="drag(event)"class="las la-chess-bishop"></i>',
+    id:"bBishop1",
+    canWalk:"cross",
+    canAttack:"cross",
+  },
+  {
+    tower:'<i id="bBishop2" draggable="true" ondragstart="drag(event)"class="las la-chess-bishop"></i>',
+    id:"bBishop2",
+    canWalk:"cross",
+    canAttack:"cross",
+  }
+  ],
+  Pawn = [
     {
       tower:  "<i id='wPawn1' draggable='true' ondragstart='drag(event)' class='las la-chess-pawn'></i>",
-      position: "",
-      id:1,
-      canWalk: 2,
-      canAttack: 1,  // 1 2 1   
-      directions: 2 // Y Y Y
-                     // N X N
-                     // N N N
+      id:"wPawn1",
+      canWalk: "straight",
+      canAttack: "fork"    
     },
     {
       tower:  "<i id='wPawn2' draggable='true' ondragstart='drag(event)' class='las la-chess-pawn'></i>",
-      position: "",
-      id:2,
-      canWalk: 2,
-      canAttack: 1,  // 1 2 1   
-      directions: 2// Y Y Y
-                     // N X N
-                     // N N N
+      id:"wPawn2",
+      canWalk: "straight",
+      canAttack: "fork" 
     },
     {
       tower:  "<i id='wPawn3' draggable='true' ondragstart='drag(event)' class='las la-chess-pawn'></i>",
-      position: "",
-      id:3,
-      canWalk: 2,
-      canAttack: 1,  // 1 2 1   
-      directions: 2// Y Y Y
-                     // N X N
-                     // N N N
+      id:"wPawn3",
+      canWalk: "straight",
+      canAttack: "fork" 
     },
     {
       tower:  "<i id='wPawn4' draggable='true' ondragstart='drag(event)' class='las la-chess-pawn'></i>",
-      position: "",
-      id:4,
-      canWalk: 2,
-      canAttack: 1,  // 1 2 1   
-      directions: 2// Y Y Y
-                     // N X N
-                     // N N N
+      id:"wPawn4",
+      canWalk: "straight",
+      canAttack: "fork" 
     },
     {
       tower:  "<i id='wPawn5' draggable='true' ondragstart='drag(event)' class='las la-chess-pawn'></i>",
-      position: "",
-      id:5,
-      canWalk: 2,
-      canAttack: 1,  // 1 2 1   
-      directions: 2// Y Y Y
-                     // N X N
-                     // N N N
+      id:"wPawn5",
+      canWalk: "straight",
+      canAttack: "fork" 
     },
     {
       tower:  "<i id='wPawn6' draggable='true' ondragstart='drag(event)' class='las la-chess-pawn'></i>",
-      position: "",
-      id:6,
-      canWalk: 2,
-      canAttack: 1,  // 1 2 1   
-      directions: 2// Y Y Y
-                     // N X N
-                     // N N N
+      id:"wPawn6",
+      canWalk: "straight",
+      canAttack: "fork" 
     },
     {
       tower:  "<i id='wPawn7' draggable='true' ondragstart='drag(event)' class='las la-chess-pawn'></i>",
-      position: "",
-      id:7,
-      canWalk: 2,
-      canAttack: 1,  // 1 2 1   
-      directions: 2// Y Y Y
-                     // N X N
-                     // N N N
+      id:"wPawn7",
+      canWalk: "straight",
+      canAttack: "fork" 
     },
     {
       tower:  "<i id='wPawn8' draggable='true' ondragstart='drag(event)' class='las la-chess-pawn'></i>",
-      position: "",
-      id:8,
-      canWalk: 2,
-      canAttack: 1,  // 1 2 1   
-      directions: 2// Y Y Y
-                     // N X N
-                     // N N N
+      id:"wPawn8",
+      canWalk: "straight",
+      canAttack: "fork" 
     },
-  ];
-
-
-   
-    //     <i id="bBishop1" draggable="true" ondragstart="drag(event)"class="las la-chess-bishop"></i>
-    //     <i id="bBishop2" draggable="true" ondragstart="drag(event)"class="las la-chess-bishop"></i>
-
-    //     <i id="bKing" draggable="true" ondragstart="drag(event)"class="las la-chess-king"></i>
-    //     <i id="bQueen" draggable="true" ondragstart="drag(event)"class="las la-chess-queen"></i>
-
-
-    //     <i id="bKnight1" draggable="true" ondragstart="drag(event)"class="las la-chess-knight"></i>
-    //     <i id="bKnight2" draggable="true" ondragstart="drag(event)"class="las la-chess-knight"></i>
-
-    //     <i id="bRook1" draggable="true" ondragstart="drag(event)"class="las la-chess-rook"></i>
-    //     <i id="bRook2" draggable="true" ondragstart="drag(event)"class="las la-chess-rook"></i>
-
-    //     <i id="bPawn1" draggable="true" ondragstart="drag(event)"class="las la-chess-pawn"></i>
-    //     <i id="bPawn2" draggable="true" ondragstart="drag(event)"class="las la-chess-pawn"></i>
-    //     <i id="bPawn3" draggable="true" ondragstart="drag(event)"class="las la-chess-pawn"></i>
-    //     <i id="bPawn4" draggable="true" ondragstart="drag(event)"class="las la-chess-pawn"></i>
-    //     <i id="bPawn5" draggable="true" ondragstart="drag(event)"class="las la-chess-pawn"></i>
-    //     <i id="bPawn6" draggable="true" ondragstart="drag(event)"class="las la-chess-pawn"></i>
-    //     <i id="bPawn7" draggable="true" ondragstart="drag(event)"class="las la-chess-pawn"></i>
-    //     <i id="bPawn8" draggable="true" ondragstart="drag(event)"class="las la-chess-pawn"></i> 
-
-     
-        // <i id="wBishop1" draggable="true" ondragstart="drag(event)"class="las la-chess-bishop"></i>
-        // <i id="wBishop2" draggable="true" ondragstart="drag(event)"class="las la-chess-bishop"></i>
-
-        // <i id="wKing" draggable="true" ondragstart="drag(event)"class="las la-chess-king"></i>
-        // <i id="wQueen" draggable="true" ondragstart="drag(event)"class="las la-chess-queen"></i>
-
-
-        // <i id="wKnight1" draggable="true" ondragstart="drag(event)"class="las la-chess-knight"></i>
-        // <i id="wKnight2" draggable="true" ondragstart="drag(event)"class="las la-chess-knight"></i>
-
-        // <i id="wRook1" draggable="true" ondragstart="drag(event)"class="las la-chess-rook"></i>
-        // <i id="wRook2" draggable="true" ondragstart="drag(event)"class="las la-chess-rook"></i>
-
-
-
+    {
+      tower:  "<i id='bPawn1' draggable='true' ondragstart='drag(event)' class='las la-chess-pawn'></i>",
+      id:"bPawn1",
+      canWalk: "straight",
+      canAttack: "fork"    
+    },
+    {
+      tower:  "<i id='bPawn2' draggable='true' ondragstart='drag(event)' class='las la-chess-pawn'></i>",
+      id:"bPawn2",
+      canWalk: "straight",
+      canAttack: "fork" 
+    },
+    {
+      tower:  "<i id='bPawn3' draggable='true' ondragstart='drag(event)' class='las la-chess-pawn'></i>",
+      id:"bPawn3",
+      canWalk: "straight",
+      canAttack: "fork" 
+    },
+    {
+      tower:  "<i id='bPawn4' draggable='true' ondragstart='drag(event)' class='las la-chess-pawn'></i>",
+      id:"bPawn4",
+      canWalk: "straight",
+      canAttack: "fork" 
+    },
+    {
+      tower:  "<i id='bPawn5' draggable='true' ondragstart='drag(event)' class='las la-chess-pawn'></i>",
+      id:"bPawn5",
+      canWalk: "straight",
+      canAttack: "fork" 
+    },
+    {
+      tower:  "<i id='bPawn6' draggable='true' ondragstart='drag(event)' class='las la-chess-pawn'></i>",
+      id:"bPawn6",
+      canWalk: "straight",
+      canAttack: "fork" 
+    },
+    {
+      tower:  "<i id='bPawn7' draggable='true' ondragstart='drag(event)' class='las la-chess-pawn'></i>",
+      id:"bPawn7",
+      canWalk: "straight",
+      canAttack: "fork" 
+    },
+    {
+      tower:  "<i id='bPawn8' draggable='true' ondragstart='drag(event)' class='las la-chess-pawn'></i>",
+      id:"bPawn8",
+      canWalk: "straight",
+      canAttack: "fork" 
+    },
+  ],
+  Knight = [
+    {
+      tower: '<i id="wKnight1" draggable="true" ondragstart="drag(event)"class="las la-chess-knight"></i>',
+      id: "wKnight1",
+      canWalk: "jump",
+      canAttack: "jump"
+    },
+    {
+      tower: '<i id="wKnight2" draggable="true" ondragstart="drag(event)"class="las la-chess-knight"></i>',
+      id: "wKnight2",
+      canWalk: "jump",
+      canAttack: "jump"
+    },
+    {
+      tower: '<i id="bKnight1" draggable="true" ondragstart="drag(event)"class="las la-chess-knight"></i>',
+      id: "bKnight1",
+      canWalk: "jump",
+      canAttack: "jump"
+    },
+    {
+      tower: '<i id="bKnight2" draggable="true" ondragstart="drag(event)"class="las la-chess-knight"></i>',
+      id: "bKnight2",
+      canWalk: "jump",
+      canAttack: "jump"
+    }
+  ],
+  Rook = [
+    {
+      tower: '<i id="wRook1" draggable="true" ondragstart="drag(event)"class="las la-chess-rook"></i>',
+      id: "wRook1",
+      canWalk: "plus",
+      canAttack: "plus"
+    },
+    {
+      tower: '<i id="wRook2" draggable="true" ondragstart="drag(event)"class="las la-chess-rook"></i>',
+      id: "wRook2",
+      canWalk: "plus",
+      canAttack: "plus"
+    },
+    {
+      tower: '<i id="bRook1" draggable="true" ondragstart="drag(event)"class="las la-chess-rook"></i>',
+      id: "bRook1",
+      canWalk: "plus",
+      canAttack: "plus"
+    },
+    {
+      tower: '<i id="bRook2" draggable="true" ondragstart="drag(event)"class="las la-chess-rook"></i>',
+      id: "bRook2",
+      canWalk: "plus",
+      canAttack: "plus"
+    }
+  ],
+  King = [
+    {
+      tower: '<i id="wKing1" draggable="true" ondragstart="drag(event)"class="las la-chess-king"></i>',
+      id: "wKing1",
+      canWalk: "around",
+      canAttack: "around"
+    },
+    {
+      tower: '<i id="bKing1" draggable="true" ondragstart="drag(event)"class="las la-chess-king"></i>',
+      id: "bKing1",
+      canWalk: "around",
+      canAttack: "around"
+    }
+  ],
+  Queen = [
+    {
+      tower: '<i id="wQueen1" draggable="true" ondragstart="drag(event)"class="las la-chess-queen"></i>',
+      id: "wQueen1",
+      canWalk: "queen",
+      canAttack: "queen"
+    },
+    {
+      tower: '<i id="bQueen1" draggable="true" ondragstart="drag(event)"class="las la-chess-queen"></i>',
+      id: "bQueen1",
+      canWalk: "queen",
+      canAttack: "queen"
+    }
+  ]
+]
 
   const NumberToLetter = (zahl) =>{
     switch(zahl){
