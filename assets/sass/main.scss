@@ -1,0 +1,122 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+html{
+    font-size: 62.5%;
+
+}
+
+main{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+i{
+    font-size: 32px;
+    cursor:pointer;
+}
+
+
+.chess-board{
+
+    display: grid;
+    grid-template-columns: repeat(8,1fr);
+    grid-template-rows: repeat(8,1fr);
+    border: 3px dotted blue;
+
+    div{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+    }  
+}
+
+
+.white-player{
+    margin-top: 10vh;
+    i{
+        color:red;
+    }
+}
+
+.black-player{
+    margin-bottom: 10vh;
+    i{
+        color:blue;
+    }
+}
+
+//+++ ANDERS MACHEN +++ //
+
+.chessField:nth-child(n+1):nth-child(-n+8):nth-child(ODD) {
+    background-color: black;
+    color:white;
+}
+
+.chessField:nth-child(n+9):nth-child(-n+16):nth-child(EVEN) {
+    background-color: black;
+    color:white;
+}
+
+.chessField:nth-child(n+17):nth-child(-n+24):nth-child(ODD) {
+    background-color: black;
+    color:white;
+
+}
+
+.chessField:nth-child(n+25):nth-child(-n+32):nth-child(EVEN) {
+    background-color: black;
+    color:white;
+
+}
+
+.chessField:nth-child(n+33):nth-child(-n+40):nth-child(ODD) {
+    background-color: black;
+    color:white;
+
+}
+
+.chessField:nth-child(n+41):nth-child(-n+48):nth-child(EVEN) {
+    background-color: black;
+    color:white;
+
+}
+
+.chessField:nth-child(n+49):nth-child(-n+56):nth-child(ODD) {
+    background-color: black;
+    color:white;
+
+}
+
+.chessField:nth-child(n+57):nth-child(-n+64):nth-child(EVEN) {
+    background-color: black;
+    color:white;
+}
+
+
+
+.chessField:nth-child(n+1):nth-child(-n+64):hover {
+    background-color: blue;
+    color:red;
+}
+
+
+.chessField:nth-child(n+1):nth-child(-n+64).active {
+    background-color: orange;
+    color:green;
+}
+
+
+
+
+
