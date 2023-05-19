@@ -38,16 +38,32 @@ i {
 
 .white-player {
   margin-top: 10vh;
+  background-color: lightblue;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  border: 3px groove black;
 }
 .white-player i {
-  color: red;
+  text-shadow: 1px 1px 2px black;
+  color: white;
 }
 
 .black-player {
   margin-bottom: 10vh;
+  background-color: lightcoral;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  border: 3px groove black;
 }
 .black-player i {
-  color: blue;
+  text-shadow: 1px 1px 2px white;
+  color: black;
 }
 
 .chessField:nth-child(n+1):nth-child(-n+8):nth-child(odd) {
@@ -93,16 +109,34 @@ i {
 .chessField:nth-child(n+1):nth-child(-n+64):hover {
   background-color: blue;
   color: red;
+  opacity: 80%;
 }
 
 .chessField:nth-child(n+1):nth-child(-n+64).active {
   background-color: orange;
   color: green;
+  opacity: 70%;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.chessField:nth-child(n+1):nth-child(-n+64).active2 {
+  background-color: orangered;
+  color: green;
+  opacity: 70%;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .chessField:nth-child(n+1):nth-child(-n+64).canAttack {
   background-color: red;
   color: green;
+  opacity: 70%;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 /*# sourceMappingURL=style.css.map */
