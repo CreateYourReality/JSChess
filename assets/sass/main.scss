@@ -4,53 +4,59 @@
     box-sizing: border-box;
 }
 
-html{
-    font-size: 62.5%;
 
+@mixin playerDefault{
+    margin: 5vh 0;
+    height: 10vh;
+    border-radius: 15px;
+    border:3px groove black;
 }
 
-main{
-    width: 100%;
-    height: 100vh;
+@mixin flexME{
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
 }
 
+@mixin fieldDefault{
+    opacity: 70%;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+html{
+    font-size: 62.5%;
+}
+
+main{
+    @include flexME();
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+}
 
 i{
     font-size: 32px;
     cursor:pointer;
 }
 
-
 .chess-board{
-
     display: grid;
     grid-template-columns: repeat(8,1fr);
     grid-template-rows: repeat(8,1fr);
     border: 3px dotted blue;
-
     div{
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        @include flexME();
         width: 60px;
         height: 60px;
     }  
 }
 
-
 .white-player{
-    margin-top: 10vh;
+    @include playerDefault();
+    @include flexME();
     background-color: lightblue;
-    height: 10vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 15px;
-    border:3px groove black;
     i{
         text-shadow: 1px 1px 2px black;
         color: white;
@@ -58,14 +64,9 @@ i{
 }
 
 .black-player{
-    margin-bottom: 10vh;
+    @include playerDefault();
+    @include flexME();
     background-color: lightcoral;
-    height: 10vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 15px;
-    border:3px groove black;
     i{
         text-shadow: 1px 1px 2px white;
         color: black;
@@ -87,31 +88,26 @@ i{
 .chessField:nth-child(n+17):nth-child(-n+24):nth-child(ODD) {
     background-color: black;
     color:white;
-
 }
 
 .chessField:nth-child(n+25):nth-child(-n+32):nth-child(EVEN) {
     background-color: black;
     color:white;
-
 }
 
 .chessField:nth-child(n+33):nth-child(-n+40):nth-child(ODD) {
     background-color: black;
     color:white;
-
 }
 
 .chessField:nth-child(n+41):nth-child(-n+48):nth-child(EVEN) {
     background-color: black;
     color:white;
-
 }
 
 .chessField:nth-child(n+49):nth-child(-n+56):nth-child(ODD) {
     background-color: black;
     color:white;
-
 }
 
 .chessField:nth-child(n+57):nth-child(-n+64):nth-child(EVEN) {
@@ -119,41 +115,28 @@ i{
     color:white;
 }
 
-
-
 .chessField:nth-child(n+1):nth-child(-n+64):hover {
+    @include fieldDefault();
     background-color: blue;
     color:red;
-    opacity: 80%;
 }
 
-
 .chessField:nth-child(n+1):nth-child(-n+64).active {
+    @include fieldDefault();
     background-color: orange;
     color:green;
-    opacity: 70%;
-    border: 1px solid black;
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    
 }
 
 .chessField:nth-child(n+1):nth-child(-n+64).active2 {
+    @include fieldDefault();
     background-color: orangered;
     color:green;
-    opacity: 70%;
-    border: 1px solid black;
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .chessField:nth-child(n+1):nth-child(-n+64).canAttack {
+    @include fieldDefault();
     background-color: red;
     color:green;
-    opacity: 70%;
-    border: 1px solid black;
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 

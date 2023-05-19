@@ -1,4 +1,3 @@
-
 const chessBoard = document.querySelector(".chess-board");
 const whitePlayer = document.querySelector(".white-player");
 const blackPlayer = document.querySelector(".black-player");
