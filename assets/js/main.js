@@ -110,76 +110,18 @@ const CreateNewGame = () => {
           gamePiece.forEach(figure => {
             if(figure.id == chessBoardFields[fieldLetter-1][fieldNumber-1]){ //wenn das Feld eine der Figuren enthält
               let currentFigure = figure.id;
-              currentFigure = currentFigure.slice(0,-1); // Überprüfe ob die Figur vom Weißen(w...) oder Schwarzen(b...) Spieler ist
-
-// ###### WHITE PAWN #######
-              if(currentFigure == "wPawn"){
-            //   if(){ //Wenn noch nicht bewegt
-            //      document.getElementById(NumberToLetter(fieldLetter-3)+String(fieldNumber)).classList.add("active");  
-            //   }
-                ShowWhereICanMove(field,"straight","b");
-                ShowWhereICanAttack(field,"fork","b");
-              } //END WHITE PAWN
-// ###### BLACK PAWN #######
-              if(currentFigure == "bPawn"){   
-            //   if(){ //Wenn noch nicht bewegt
-            //      document.getElementById(NumberToLetter(fieldLetter-3)+String(fieldNumber)).classList.add("active");  
-            //   }
-                ShowWhereICanMove(field,"straight","w");
-                ShowWhereICanAttack(field,"fork","w");
-              } // END BLACK PAWN
-// ###### WHITE KING ######           
-              if(currentFigure == "wKing"){
-                ShowWhereICanMove(field,"around");
-                ShowWhereICanAttack(field,"around","b");
-              }
-// ###### BLACK KING ######     
-              if(currentFigure == "bKing"){
-                ShowWhereICanMove(field,"around");
-                ShowWhereICanAttack(field,"around","w");
-              }
-// ###### WHITE BISHOP ######     
-              if(currentFigure == "wBishop"){
-                ShowWhereICanMove(field,"cross");
-                ShowWhereICanAttack(field,"cross","b");
-              }
-// ###### BLACK BISHOP ######  
-              if(currentFigure == "bBishop"){
-                ShowWhereICanMove(field,"cross");
-                ShowWhereICanAttack(field,"cross","w");
-              }
-// ###### WHITE ROOK ######     
-              if(currentFigure == "wRook"){
-                ShowWhereICanMove(field,"plus");
-                ShowWhereICanAttack(field,"plus","b");
-              }
-// ###### BLACK ROOK ######  
-              if(currentFigure == "bRook"){
-                ShowWhereICanMove(field,"plus");
-                ShowWhereICanAttack(field,"plus","w");
-              }
-// ###### WHITE QUEEN ######     
-              if(currentFigure == "wQueen"){
-                ShowWhereICanMove(field,"queen");
-                ShowWhereICanAttack(field,"queen","b");
-              }
-// ###### BLACK QUEEN ######  
-              if(currentFigure == "bQueen"){
-                ShowWhereICanMove(field,"queen");
-                ShowWhereICanAttack(field,"queen","w");
-              }
-// ###### WHITE KNIGHT ######     
-              if(currentFigure == "wKnight"){
-                ShowWhereICanMove(field,"jump");
-                ShowWhereICanAttack(field,"jump","b");
-              }
-// ###### BLACK KNIGHT ######  
-              if(currentFigure == "bKight"){
-                ShowWhereICanMove(field,"jump");
-                ShowWhereICanAttack(field,"jump","w");
+              colorCurrentFigure = currentFigure.slice(0,1) == "w" ? colorCurrentFigure = "b" : colorCurrentFigure = "w";
+              currentFigure = currentFigure.slice(1,currentFigure.length-1); // Überprüfe ob die Figur vom Weißen(w...) oder Schwarzen(b...) Spieler ist
+              switch(currentFigure){
+                case "Pawn": ShowFigureOptions(field, "straight", "fork", colorCurrentFigure);break;
+                case "King": ShowFigureOptions(field, "around", "around", colorCurrentFigure);break;
+                case "Bishop": ShowFigureOptions(field, "cross", "cross", colorCurrentFigure);break;
+                case "Rook": ShowFigureOptions(field, "plus", "plus", colorCurrentFigure);break;  
+                case "Queen": ShowFigureOptions(field, "queen", "queen", colorCurrentFigure);break;  
+                case "Knight": ShowFigureOptions(field, "jump", "jump", colorCurrentFigure);break;    
               }
             } 
-             });
+          });
         });
     })
   })
@@ -189,6 +131,11 @@ const CreateNewGame = () => {
    // console.log(chessboardRow);
    // console.log(chessboardColumn);
    // console.log(data);
+  }
+
+  const ShowFigureOptions = (field,moveDir,attDir,player) => {
+    ShowWhereICanMove(field,moveDir,player);
+    ShowWhereICanAttack(field,attDir,player);
   }
 
   const CanIAttackOnThisField = (field,player) => {
