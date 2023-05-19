@@ -24,33 +24,35 @@ let chessBoardFields = [
 const CreateChessField = () => {
   for(let y = 0; y < chessColumns;y++){
     for(let x = 0; x < chessRows; x++){
-        chessBoard.innerHTML += "<div id='" +NumberToLetter(y) + (x+1)+"' ondrop='drop(event)' ondragover='allowDrop(event)' class='chessField'>"+NumberToLetter(y)+(x+1) +"</div>";
+        let newChessField = document.createElement("div");
+        newChessField.setAttribute("ondrop", "drop(event)");
+        newChessField.setAttribute("ondragover", 'allowDrop(event)');
+        newChessField.id = NumberToLetter(y)+(x+1);
+        newChessField.classList.add("chessField");
+        newChessField.textContent = NumberToLetter(y)+(x+1);
+        chessBoard.appendChild(newChessField);
     }
   }
 }
 
 const CreateNewGame = () => {
   CreateChessField();
-for(let i = 0; i < 8; i++){
-  whitePlayer.innerHTML += Pawn[i].tower;
-  blackPlayer.innerHTML += Pawn[i+8].tower;
-}
-
-for(let i = 0; i < 2; i++){
-  whitePlayer.innerHTML += Rook[i].tower;
-  blackPlayer.innerHTML += Rook[i+2].tower;
-
-  whitePlayer.innerHTML += Knight[i].tower;
-  blackPlayer.innerHTML += Knight[i+2].tower;
-
-  whitePlayer.innerHTML += Bishop[i].tower;
-  blackPlayer.innerHTML += Bishop[i+2].tower;
-}
-
-whitePlayer.innerHTML += King[0].tower;
-blackPlayer.innerHTML += King[1].tower;
-whitePlayer.innerHTML += Queen[0].tower;
-blackPlayer.innerHTML += Queen[1].tower;
+  whitePlayer.innerHTML += King[0].tower;
+  whitePlayer.innerHTML += Queen[0].tower;
+  blackPlayer.innerHTML += King[1].tower;
+  blackPlayer.innerHTML += Queen[1].tower;
+  for(let i = 0; i < 8; i++){
+    whitePlayer.innerHTML += Pawn[i].tower;
+    blackPlayer.innerHTML += Pawn[i+8].tower;
+  }
+  for(let i = 0; i < 2; i++){
+    whitePlayer.innerHTML += Rook[i].tower;
+    blackPlayer.innerHTML += Rook[i+2].tower;
+    whitePlayer.innerHTML += Knight[i].tower;
+    blackPlayer.innerHTML += Knight[i+2].tower;
+    whitePlayer.innerHTML += Bishop[i].tower;
+    blackPlayer.innerHTML += Bishop[i+2].tower;
+  }
 }
 
   //Packt die Figur in ein Feld in dem Array
@@ -75,9 +77,9 @@ blackPlayer.innerHTML += Queen[1].tower;
     let chessboardRow = LetterToNumber(ev.target.id.slice(0,1));
     let chessboardColumn = Number(ev.target.id.slice(1,2));
 
-    console.log("test: "+typeof data);
+ //   console.log("test: "+typeof data);
 
-    SetArrayPointer(chessboardRow,chessboardColumn,data);
+    SetArrayPointer(chessboardRow,chessboardColumn,data);//setzt die figur in ein array
     allChessFields = document.querySelectorAll(".chessField");
 
 
@@ -95,10 +97,7 @@ blackPlayer.innerHTML += Queen[1].tower;
           lastActiveField.classList.toggle("active");
           lastActiveField = activeField;
           field.classList.toggle("active");
-
         }
-
-       
 
         let fieldLetter = Number(LetterToNumber(field.id.slice(0,1)));
         let fieldNumber = Number(field.id.slice(1,2));
@@ -185,13 +184,12 @@ blackPlayer.innerHTML += Queen[1].tower;
     })
   })
 
-
-  //  console.log(allChessFields);
+   // console.log(chessBoardFields);
+   // console.log(allChessFields);
    // console.log(chessboardRow);
    // console.log(chessboardColumn);
    // console.log(data);
   }
-
 
   const CanIAttackOnThisField = (field,player) => {
     try{
@@ -202,225 +200,126 @@ blackPlayer.innerHTML += Queen[1].tower;
     }catch (error){/*console.error(error);*/}
   }
 
-  const ShowWhereICanAttack = (field,canAttack,player) => {
+  const directions = {
+      straight: [-2,0],
+      forkLeft:[-2,-1],
+      forkRight:[-2,1],
+      sideLeft:[-1,-1],
+      sideRight:[-1,1],
+      straightDown:[0,0],
+      forkLeftDown:[0,-1],
+      forkRightDown:[0,+1]
+    }
+
+  const getDirection = (field,[x,y]) => {
     let fieldLetter = Number(LetterToNumber(field.id.slice(0,1)));
     let fieldNumber = Number(field.id.slice(1,2));
-    console.log("ich habe geklickt: "+field.id + "("+fieldLetter+" "+fieldNumber+")");
-    console.log("Auf diesem Feld befindet sich: "+chessBoardFields[fieldLetter-1][fieldNumber-1]);
-    let straight = document.getElementById(NumberToLetter(fieldLetter-2)+String(fieldNumber));
-    let forkLeft = document.getElementById(NumberToLetter(fieldLetter-2)+String(fieldNumber-1));
-    let forkRight = document.getElementById(NumberToLetter(fieldLetter-2)+String(fieldNumber+1));
-    let sideLeft = document.getElementById(NumberToLetter(fieldLetter-1)+String(fieldNumber-1));
-    let sideRight = document.getElementById(NumberToLetter(fieldLetter-1)+String(fieldNumber+1));
-    let straightDown = document.getElementById(NumberToLetter(fieldLetter)+String(fieldNumber));
-    let forkLeftDown = document.getElementById(NumberToLetter(fieldLetter)+String(fieldNumber-1));
-    let forkRightDown = document.getElementById(NumberToLetter(fieldLetter)+String(fieldNumber+1));   
-
-    if(canAttack == "around"){
-        forkLeft ==  null ? true : CanIAttackOnThisField(forkLeft,player);
-        forkRight ==  null ? true : CanIAttackOnThisField(forkRight,player);
-        forkRightDown ==  null ? true : CanIAttackOnThisField(forkRightDown,player);
-        forkLeftDown ==  null ? true : CanIAttackOnThisField(forkLeftDown,player);
-        sideLeft == null ? true : CanIAttackOnThisField(sideLeft,player);
-        sideRight == null ? true : CanIAttackOnThisField(sideRight,player);
-        straight == null ? true : CanIAttackOnThisField(straight,player);
-        straightDown == null ? true : CanIAttackOnThisField(straightDown,player);
-    } 
-
-    if(canAttack == "plus"){
-      for(let i = 0; i < 8;i++){
-        let left = document.getElementById(NumberToLetter(fieldLetter-1)+String(fieldNumber-1-i));
-        let right = document.getElementById(NumberToLetter(fieldLetter-1)+String(fieldNumber+1+i));
-        let up = document.getElementById(NumberToLetter(fieldLetter-2-i)+String(fieldNumber));
-        let down = document.getElementById(NumberToLetter(fieldLetter-2+i)+String(fieldNumber));
-
-        left ==  null ? true : CanIAttackOnThisField(left,player);
-        right ==  null ? true : CanIAttackOnThisField(right,player);
-        up ==  null ? true : CanIAttackOnThisField(up,player);
-        down ==  null ? true : CanIAttackOnThisField(down,player);
-      }
-    }
-
-    if(canAttack == "cross"){
-      for(let i = 0; i < 8;i++){
-        let crossLeft = document.getElementById(NumberToLetter(fieldLetter-2-i)+String(fieldNumber-1-i));
-        let crossRight = document.getElementById(NumberToLetter(fieldLetter-2-i)+String(fieldNumber+1+i));
-        let crossRightDown = document.getElementById(NumberToLetter(fieldLetter+i)+String(fieldNumber+1+i));
-        let crossLeftDown = document.getElementById(NumberToLetter(fieldLetter+i)+String(fieldNumber-1-i));
-        crossLeft ==  null ? true : CanIAttackOnThisField(crossLeft,player);
-        crossRight ==  null ? true : CanIAttackOnThisField(crossRight,player);
-        crossRightDown ==  null ? true : CanIAttackOnThisField(crossRightDown,player);
-        crossLeftDown ==  null ? true : CanIAttackOnThisField(crossLeftDown,player);
-      }
-    }
-
-    if(canAttack == "fork"){
-      if(player == "b"){
-        forkLeft ==  null ? true : CanIAttackOnThisField(forkLeft,player);
-        forkRight ==  null ? true : CanIAttackOnThisField(forkRight,player);
-      }else{
-        forkRightDown ==  null ? true : CanIAttackOnThisField(forkRightDown,player);
-        forkLeftDown ==  null ? true : CanIAttackOnThisField(forkLeftDown,player);
-      }
-    }
-
-    if(canAttack == "jump"){
-
-    }
-
-    if(canAttack == "queen"){
-
-      //cross
-      for(let i = 0; i < 8;i++){
-        let crossLeft = document.getElementById(NumberToLetter(fieldLetter-2-i)+String(fieldNumber-1-i));
-        let crossRight = document.getElementById(NumberToLetter(fieldLetter-2-i)+String(fieldNumber+1+i));
-        let crossRightDown = document.getElementById(NumberToLetter(fieldLetter+i)+String(fieldNumber+1+i));
-        let crossLeftDown = document.getElementById(NumberToLetter(fieldLetter+i)+String(fieldNumber-1-i));
-        crossLeft ==  null ? true : CanIAttackOnThisField(crossLeft,player);
-        crossRight ==  null ? true : CanIAttackOnThisField(crossRight,player);
-        crossRightDown ==  null ? true : CanIAttackOnThisField(crossRightDown,player);
-        crossLeftDown ==  null ? true : CanIAttackOnThisField(crossLeftDown,player);
-      }
-
-      //plus
-      for(let i = 0; i < 8;i++){
-        let left = document.getElementById(NumberToLetter(fieldLetter-1)+String(fieldNumber-1-i));
-        let right = document.getElementById(NumberToLetter(fieldLetter-1)+String(fieldNumber+1+i));
-        let up = document.getElementById(NumberToLetter(fieldLetter-2-i)+String(fieldNumber));
-        let down = document.getElementById(NumberToLetter(fieldLetter-2+i)+String(fieldNumber));
-
-        left ==  null ? true : CanIAttackOnThisField(left,player);
-        right ==  null ? true : CanIAttackOnThisField(right,player);
-        up ==  null ? true : CanIAttackOnThisField(up,player);
-        down ==  null ? true : CanIAttackOnThisField(down,player);
-      }
-
-      //around
-      forkLeft ==  null ? true : CanIAttackOnThisField(forkLeft,player);
-      forkRight ==  null ? true : CanIAttackOnThisField(forkRight,player);
-      forkRightDown ==  null ? true : CanIAttackOnThisField(forkRightDown,player);
-      forkLeftDown ==  null ? true : CanIAttackOnThisField(forkLeftDown,player);
-      sideLeft == null ? true : CanIAttackOnThisField(sideLeft,player);
-      sideRight == null ? true : CanIAttackOnThisField(sideRight,player);
-      straight == null ? true : CanIAttackOnThisField(straight,player);
-      straightDown == null ? true : CanIAttackOnThisField(straightDown,player);
-
-    }
-
-
-
-
+//    console.log("ich habe geklickt: "+field.id + "("+fieldLetter+" "+fieldNumber+")");
+//    console.log("Auf diesem Feld befindet sich: "+chessBoardFields[fieldLetter-1][fieldNumber-1]);
+    return document.getElementById(NumberToLetter(fieldLetter+x)+String(fieldNumber+y));
   }
 
   const ShowWhereICanMove = (field,canWalk,player) => {
-    
-        let fieldLetter = Number(LetterToNumber(field.id.slice(0,1)));
-        let fieldNumber = Number(field.id.slice(1,2));
-
-        console.log("ich habe geklickt: "+field.id + "("+fieldLetter+" "+fieldNumber+")");
-        console.log("Auf diesem Feld befindet sich: "+chessBoardFields[fieldLetter-1][fieldNumber-1]);
-
-        let straight = document.getElementById(NumberToLetter(fieldLetter-2)+String(fieldNumber));
-        let forkLeft = document.getElementById(NumberToLetter(fieldLetter-2)+String(fieldNumber-1));
-        let forkRight = document.getElementById(NumberToLetter(fieldLetter-2)+String(fieldNumber+1));
-
-        let sideLeft = document.getElementById(NumberToLetter(fieldLetter-1)+String(fieldNumber-1));
-        let sideRight = document.getElementById(NumberToLetter(fieldLetter-1)+String(fieldNumber+1));
-
-        let straightDown = document.getElementById(NumberToLetter(fieldLetter)+String(fieldNumber));
-        let forkLeftDown = document.getElementById(NumberToLetter(fieldLetter)+String(fieldNumber-1));
-        let forkRightDown = document.getElementById(NumberToLetter(fieldLetter)+String(fieldNumber+1));
-
-
-    if(canWalk == "cross"){
-        for(let i = 0; i < 8;i++){
-          let crossLeft = document.getElementById(NumberToLetter(fieldLetter-2-i)+String(fieldNumber-1-i));
-          let crossRight = document.getElementById(NumberToLetter(fieldLetter-2-i)+String(fieldNumber+1+i));
-          let crossRightDown = document.getElementById(NumberToLetter(fieldLetter+i)+String(fieldNumber+1+i));
-          let crossLeftDown = document.getElementById(NumberToLetter(fieldLetter+i)+String(fieldNumber-1-i));
-
-          crossLeft ==  null ? true : crossLeft.classList.add("active");
-          crossRight ==  null ? true : crossRight.classList.add("active");
-          crossRightDown ==  null ? true : crossRightDown.classList.add("active");
-          crossLeftDown ==  null ? true : crossLeftDown.classList.add("active");
-        }
+    switch(canWalk){
+      case "cross": CrossMove(field);break;
+      case "straight": StraightMove(field,player);break;
+      case "plus": PlusMove(field);break;
+      case "around": AroundMove(field);break;
+      case "jump": break;
+      case "queen": CrossMove(field);PlusMove(field); AroundMove(field);break;
     }
-
-    if(canWalk == "straight"){
-      if(player == "b"){
-        straight ==  null ? true : straight.classList.add("active");
-
-      }else{
-        straightDown ==  null ? true : straightDown.classList.add("active");
-      }
-    }
-
-    if(canWalk == "plus"){
-      for(let i = 0; i < 8;i++){
-        let left = document.getElementById(NumberToLetter(fieldLetter-1)+String(fieldNumber-1-i));
-        let right = document.getElementById(NumberToLetter(fieldLetter-1)+String(fieldNumber+1+i));
-        let up = document.getElementById(NumberToLetter(fieldLetter-2-i)+String(fieldNumber));
-        let down = document.getElementById(NumberToLetter(fieldLetter-2+i)+String(fieldNumber));
-
-        left ==  null ? true : left.classList.add("active");
-        right ==  null ? true : right.classList.add("active");
-        up ==  null ? true : up.classList.add("active");
-        down ==  null ? true : down.classList.add("active");
-      }
-    }
-
-    if(canWalk == "around"){
-      forkLeft ==  null ? true : forkLeft.classList.add("active");
-      forkRight ==  null ? true : forkRight.classList.add("active");
-      forkRightDown ==  null ? true : forkRightDown.classList.add("active");
-      forkLeftDown ==  null ? true : forkLeftDown.classList.add("active");
-      sideLeft == null ? true : sideLeft.classList.add("active");
-      sideRight == null ? true : sideRight.classList.add("active");
-      straight == null ? true : straight.classList.add("active");
-      straightDown == null ? true : straightDown.classList.add("active");
-
   }
 
-
-  if(canWalk == "queen"){
-
-    //cross
-    for(let i = 0; i < 8;i++){
-      let crossLeft = document.getElementById(NumberToLetter(fieldLetter-2-i)+String(fieldNumber-1-i));
-      let crossRight = document.getElementById(NumberToLetter(fieldLetter-2-i)+String(fieldNumber+1+i));
-      let crossRightDown = document.getElementById(NumberToLetter(fieldLetter+i)+String(fieldNumber+1+i));
-      let crossLeftDown = document.getElementById(NumberToLetter(fieldLetter+i)+String(fieldNumber-1-i));
-      crossLeft ==  null ? true : crossLeft.classList.add("active");
-      crossRight ==  null ? true : crossRight.classList.add("active");
-      crossRightDown ==  null ? true : crossRightDown.classList.add("active");
-      crossLeftDown ==  null ? true : crossLeftDown.classList.add("active");
+  const ShowWhereICanAttack = (field,canAttack,player) => {
+    switch(canAttack) {
+      case "around": AroundAttack(field,player);break;
+      case "plus": PlusAttack(field,player);break;
+      case "cross": CrossAttack(field,player);break;
+      case "fork": StraightAttack(field,player);
+      case "jump": break;
+      case "queen":CrossAttack(field,player);PlusAttack(field,player);AroundAttack(field,player);break;
     }
+  }
 
-    //plus
+  const SetMoveField = (field,a,b) => {
+    let activeField = getDirection(field,[a, b]);      
+    activeField ==  null ? true : activeField.classList.add("active");
+  }
+
+  const SetAttackField = (field,a,b,player) => {
+    let attackField = getDirection(field,[a, b]);      
+    attackField ==  null ? true : CanIAttackOnThisField(attackField,player);
+  }
+
+  const CrossAttack = (field,player) => {
     for(let i = 0; i < 8;i++){
-      let left = document.getElementById(NumberToLetter(fieldLetter-1)+String(fieldNumber-1-i));
-      let right = document.getElementById(NumberToLetter(fieldLetter-1)+String(fieldNumber+1+i));
-      let up = document.getElementById(NumberToLetter(fieldLetter-2-i)+String(fieldNumber));
-      let down = document.getElementById(NumberToLetter(fieldLetter-2+i)+String(fieldNumber));
+      SetAttackField(field,directions.forkLeft[0]-i,directions.forkLeft[1]-i,player);
+      SetAttackField(field,directions.forkRight[0]-i,directions.forkRight[1]+i,player);
+      SetAttackField(field,directions.forkRightDown[0]+i,directions.forkRightDown[1]+i,player);
+      SetAttackField(field,directions.forkLeftDown[0]+i,directions.forkLeftDown[1]-i,player);
+    }
+  }
 
-      left ==  null ? true : left.classList.add("active");
-      right ==  null ? true : right.classList.add("active");
+  const CrossMove = (field) => {
+    for(let i = 0; i < 8;i++){
+      SetMoveField(field,directions.forkLeft[0]-i,directions.forkLeft[1]-i);
+      SetMoveField(field,directions.forkRight[0]-i,directions.forkRight[1]+i);
+      SetMoveField(field,directions.forkRightDown[0]+i,directions.forkRightDown[1]+i);
+      SetMoveField(field,directions.forkLeftDown[0]+i,directions.forkLeftDown[1]-i);
+    }
+  }
+
+  const PlusMove = (field) => {
+    for(let i = 0; i < 8;i++){
+      SetMoveField(field,directions.sideLeft[0],directions.sideLeft[1]-i);
+      SetMoveField(field,directions.sideRight[0],directions.sideRight[1]+i);
+      SetMoveField(field,directions.straight[0]-i,directions.straight[1]);
+      SetMoveField(field,directions.straightDown[0]+i,directions.straightDown[1]);
+    }
+  }
+
+  const PlusAttack = (field,player) => {
+    for(let i = 0; i < 8;i++){
+      SetAttackField(field,directions.sideLeft[0],directions.sideLeft[1]-i,player);
+      SetAttackField(field,directions.sideRight[0],directions.sideRight[1]+i,player);
+      SetAttackField(field,directions.straight[0]-i,directions.straight[1],player);
+      SetAttackField(field,directions.straightDown[0]+i,directions.straightDown[1],player);
+    }
+  }
+
+  const AroundMove = (field) => {
+    let directionArray = Object.values(directions);
+    for(let i = 0; i < directionArray.length; i++){
+      SetMoveField(field,directionArray[i][0],directionArray[i][1]);
+    }
+  }
+
+  const AroundAttack = (field,player) => {
+    let directionArray = Object.values(directions);
+    for(let i = 0; i < directionArray.length; i++){
+      SetAttackField(field,directionArray[i][0],directionArray[i][1],player);
+    }
+  }
+
+  const StraightMove = (field,player) => {
+    if(player == "b"){
+      let up = getDirection(field,directions.straight); 
       up ==  null ? true : up.classList.add("active");
+    }else{
+      let down = getDirection(field,directions.straightDown); 
       down ==  null ? true : down.classList.add("active");
     }
-
-    //around
-    forkLeft ==  null ? true : forkLeft.classList.add("active");
-    forkRight ==  null ? true : forkRight.classList.add("active");
-    forkRightDown ==  null ? true : forkRightDown.classList.add("active");
-    forkLeftDown ==  null ? true : forkLeftDown.classList.add("active");
-    sideLeft == null ? true : sideLeft.classList.add("active");
-    sideRight == null ? true : sideRight.classList.add("active");
-    straight == null ? true : straight.classList.add("active");
-    straightDown == null ? true : straightDown.classList.add("active");
-
   }
 
+  const StraightAttack = (field,player) => {
+    if(player == "b"){
+      SetAttackField(field,directions.forkLeft[0],directions.forkLeft[1],player);
+      SetAttackField(field,directions.forkRight[0],directions.forkRight[1],player);
+    }else{
+      SetAttackField(field,directions.forkLeftDown[0],directions.forkLeftDown[1],player);
+      SetAttackField(field,directions.forkRightDown[0],directions.forkRightDown[1],player);
+    }
   }
+
 
   CreateNewGame();
