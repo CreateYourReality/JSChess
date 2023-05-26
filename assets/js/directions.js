@@ -120,16 +120,25 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
   }
 
   const StraightMove = (field,player) => {
-    if(player == "b"){
+    if(player == "b"){ //ich weiß, gegner schwarz
       let up = getDirection(field,directions.straight); 
       if(up !=  null){
+        if(field.id.slice(0,1) == "G"){ //Bauer noch nicht bewegt
+          let up2 = getDirection(up,directions.straight);
+          activeFieldArray.push(up2);
+          up2.classList.add("active");
+        } 
         activeFieldArray.push(up);
         up.classList.add("active");
       }
-      
     }else{
       let down = getDirection(field,directions.straightDown); 
       if(down !=  null){
+        if(field.id.slice(0,1) == "B"){ //Bauer noch nicht bewegt
+          let down2 = getDirection(down,directions.straightDown);
+          activeFieldArray.push(down2);
+          down2.classList.add("active");
+        } 
         activeFieldArray.push(down);
         down.classList.add("active");
       }
