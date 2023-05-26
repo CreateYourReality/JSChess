@@ -50,8 +50,12 @@ main .chess-board {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, 1fr);
-  border: 3px dotted blue;
+  border: 3px groove yellowgreen;
+  padding: 10px;
   position: relative;
+}
+main .chess-board .chessField {
+  border: black 0.5px solid;
 }
 main .chess-board .chessField:nth-child(n+1):nth-child(-n+8):nth-child(odd),
 main .chess-board .chessField:nth-child(n+9):nth-child(-n+16):nth-child(even),

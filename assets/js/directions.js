@@ -18,7 +18,10 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
     try{
       let canAttackField = field.querySelector(":first-child").id;
       if(canAttackField.slice(0,1) == player){
-        field.classList.add("canAttack");      
+        field.classList.add("canAttack");
+        return true;      
+      }else{
+        return false;
       } 
     }catch (error){/*console.error(error);*/}
   }
@@ -56,53 +59,86 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
   const SetMoveField = (field,a,b) => {
     let activeField = getDirection(field,[a, b]);      
     if(activeField !=  null){
-      activeField.classList.add("active");
-      activeFieldArray.push(activeField);
-    }  
+        if(activeField.children[0] == undefined){
+          activeField.classList.add("active");
+          activeFieldArray.push(activeField);
+          return true;
+        }
+        return false;
+    }
   }
 
   const SetAttackField = (field,a,b,player) => {
-    let attackField = getDirection(field,[a, b]);      
+    let attackField = getDirection(field,[a, b]);
     if(attackField !=  null) {
-      CanIAttackOnThisField(attackField,player);
-      attackFieldArray.push(attackField);
+      if(player == "w"){
+        try{
+          if(attackField.querySelector(":first-child").id.slice(0,1) == "b"){
+            return false;
+          }
+        }catch(error){/*console.error(error)*/}
+      }
+      if(player == "b"){
+        try{
+          if(attackField.querySelector(":first-child").id.slice(0,1) == "w"){
+            return false;
+          } 
+        }catch(error){/*console.error(error);*/}
+      }
+      if(CanIAttackOnThisField(attackField,player)){
+        attackFieldArray.push(attackField);
+        return false;
+      }
     }
+    return true;
   }
+
+// ######## ATTACK #########
 
   const CrossAttack = (field,player) => {
     for(let i = 0; i < 8;i++){
-      SetAttackField(field,directions.forkLeft[0]-i,directions.forkLeft[1]-i,player);
-      SetAttackField(field,directions.forkRight[0]-i,directions.forkRight[1]+i,player);
-      SetAttackField(field,directions.forkRightDown[0]+i,directions.forkRightDown[1]+i,player);
-      SetAttackField(field,directions.forkLeftDown[0]+i,directions.forkLeftDown[1]-i,player);
+      if(!SetAttackField(field,directions.forkLeft[0]-i,directions.forkLeft[1]-i,player)){
+        break;
+      }
     }
-  }
-
-  const CrossMove = (field) => {
     for(let i = 0; i < 8;i++){
-      SetMoveField(field,directions.forkLeft[0]-i,directions.forkLeft[1]-i);
-      SetMoveField(field,directions.forkRight[0]-i,directions.forkRight[1]+i);
-      SetMoveField(field,directions.forkRightDown[0]+i,directions.forkRightDown[1]+i);
-      SetMoveField(field,directions.forkLeftDown[0]+i,directions.forkLeftDown[1]-i);
+      if(!SetAttackField(field,directions.forkRight[0]-i,directions.forkRight[1]+i,player)){
+        break;
+      }
     }
-  }
-
-  const PlusMove = (field) => {
     for(let i = 0; i < 8;i++){
-      SetMoveField(field,directions.sideLeft[0],directions.sideLeft[1]-i);
-      SetMoveField(field,directions.sideRight[0],directions.sideRight[1]+i);
-      SetMoveField(field,directions.straight[0]-i,directions.straight[1]);
-      SetMoveField(field,directions.straightDown[0]+i,directions.straightDown[1]);
+      if(!SetAttackField(field,directions.forkRightDown[0]+i,directions.forkRightDown[1]+i,player)){
+        break;
+      }
     }
+    for(let i = 0; i < 8;i++){
+      if(!SetAttackField(field,directions.forkLeftDown[0]+i,directions.forkLeftDown[1]-i,player)){
+        break;
+      }
+    } 
   }
 
   const PlusAttack = (field,player) => {
     for(let i = 0; i < 8;i++){
-      SetAttackField(field,directions.sideLeft[0],directions.sideLeft[1]-i,player);
-      SetAttackField(field,directions.sideRight[0],directions.sideRight[1]+i,player);
-      SetAttackField(field,directions.straight[0]-i,directions.straight[1],player);
-      SetAttackField(field,directions.straightDown[0]+i,directions.straightDown[1],player);
+      if(!SetAttackField(field,directions.sideLeft[0],directions.sideLeft[1]-i,player)){
+        break;
+      }
     }
+    for(let i = 0; i < 8;i++){
+      if(!SetAttackField(field,directions.sideRight[0],directions.sideRight[1]+i,player)){
+        break;
+      }
+    }
+    for(let i = 0; i < 8;i++){
+      if(!SetAttackField(field,directions.straight[0]-i,directions.straight[1],player)){
+        break;
+      }
+    }
+    for(let i = 0; i < 8;i++){
+      if(!SetAttackField(field,directions.straightDown[0]+i,directions.straightDown[1],player)){
+        break;
+      }
+    } 
   }
 
   const AroundMove = (field) => {
@@ -117,6 +153,63 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
     for(let i = 0; i < directionArray.length; i++){
       SetAttackField(field,directionArray[i][0],directionArray[i][1],player);
     }
+  }
+  
+  const StraightAttack = (field,player) => {
+    if(player == "b"){
+      SetAttackField(field,directions.forkLeft[0],directions.forkLeft[1],player);
+      SetAttackField(field,directions.forkRight[0],directions.forkRight[1],player);
+    }else{
+      SetAttackField(field,directions.forkLeftDown[0],directions.forkLeftDown[1],player);
+      SetAttackField(field,directions.forkRightDown[0],directions.forkRightDown[1],player);
+    }
+  }
+
+// ######## MOVEMENT #########
+  const CrossMove = (field) => {
+    for(let i = 0; i < 8;i++){
+      if(!SetMoveField(field,directions.forkLeft[0]-i,directions.forkLeft[1]-i)){
+        break;
+      }
+    }
+    for(let i = 0; i < 8;i++){
+      if(!SetMoveField(field,directions.forkRight[0]-i,directions.forkRight[1]+i)){
+        break;
+      }
+    }
+    for(let i = 0; i < 8;i++){
+      if(!SetMoveField(field,directions.forkRightDown[0]+i,directions.forkRightDown[1]+i)){
+        break;
+      }
+    }
+    for(let i = 0; i < 8;i++){
+      if(!SetMoveField(field,directions.forkLeftDown[0]+i,directions.forkLeftDown[1]-i)){
+        break;
+      }
+    }
+  }
+
+  const PlusMove = (field) => {
+    for(let i = 0; i < 8;i++){
+      if(!SetMoveField(field,directions.sideLeft[0],directions.sideLeft[1]-i)){
+        break;
+      }
+    }
+    for(let i = 0; i < 8;i++){
+      if(!SetMoveField(field,directions.sideRight[0],directions.sideRight[1]+i)){
+        break;
+      }
+    }
+    for(let i = 0; i < 8;i++){
+      if(!SetMoveField(field,directions.straight[0]-i,directions.straight[1])){
+        break;
+      }  
+    }
+    for(let i = 0; i < 8;i++){
+      if(!SetMoveField(field,directions.straightDown[0]+i,directions.straightDown[1])){
+        break;
+      }  
+    } 
   }
 
   const StraightMove = (field,player) => {
@@ -145,12 +238,3 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
     }
   }
 
-  const StraightAttack = (field,player) => {
-    if(player == "b"){
-      SetAttackField(field,directions.forkLeft[0],directions.forkLeft[1],player);
-      SetAttackField(field,directions.forkRight[0],directions.forkRight[1],player);
-    }else{
-      SetAttackField(field,directions.forkLeftDown[0],directions.forkLeftDown[1],player);
-      SetAttackField(field,directions.forkRightDown[0],directions.forkRightDown[1],player);
-    }
-  }
