@@ -40,7 +40,7 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
       case "straight": StraightMove(field,player);break;
       case "plus": PlusMove(field);break;
       case "around": AroundMove(field);break;
-      case "jump": break;
+      case "jump": JumpMove(field);break;
       case "queen": CrossMove(field);PlusMove(field); AroundMove(field);break;
     }
   }
@@ -210,6 +210,110 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
         break;
       }  
     } 
+  }
+
+
+ /* const SetJumpField = (field,a,b) => {
+    let activeField = getDirection(field,[a, b]);      
+    if(activeField !=  null){
+          activeField.classList.add("active");
+          activeFieldArray.push(activeField);
+    }
+  } */
+
+
+  const JumpMove = (field,player) => {
+
+    try{
+      let first = getDirection(field,directions.straight);
+      if(first != null ){
+        first = getDirection(first,directions.straight);
+        first = getDirection(first,directions.sideLeft);
+        if(first.children[0] == undefined){
+          activeFieldArray.push(first);
+          first.classList.add("active");
+        }
+      }
+    }catch(error){}
+  try{
+      let second = getDirection(field,directions.straight);
+      if(second != null ){
+        second = getDirection(second,directions.straight);
+        second = getDirection(second,directions.sideRight);
+        if(second.children[0] == undefined){
+          activeFieldArray.push(second);
+          second.classList.add("active");
+        }
+      }
+    }catch(error){}
+    try{
+      let third = getDirection(field,directions.sideRight);
+      if(third != null){
+        third = getDirection(third,directions.sideRight);
+        third = getDirection(third,directions.straight);
+        if(third.children[0] == undefined){
+          activeFieldArray.push(third);
+          third.classList.add("active");
+        }
+      }
+    }catch(error){}
+   try{
+      let fourth = getDirection(field,directions.sideLeft);
+      if(fourth != null){
+        fourth = getDirection(fourth,directions.sideLeft);
+        fourth = getDirection(fourth,directions.straight);
+        if(fourth.children[0] == undefined){
+          activeFieldArray.push(fourth);
+          fourth.classList.add("active");
+        }
+      }
+    }catch(error){}
+     try{
+      let fifth = getDirection(field,directions.sideLeft);
+      if(fifth != null){
+        fifth = getDirection(fifth,directions.sideLeft);
+        fifth = getDirection(fifth,directions.straightDown);
+        if(fifth.children[0] == undefined){
+          activeFieldArray.push(fifth);
+          fifth.classList.add("active");
+        }
+      }
+    }catch(error){}
+    
+    try{
+      let six = getDirection(field,directions.sideRight);
+      if(six != null){
+        six = getDirection(six,directions.sideRight);
+        six = getDirection(six,directions.straightDown);
+        if(six.children[0] == undefined){
+          activeFieldArray.push(six);
+          six.classList.add("active");
+        }
+      }
+    }catch(error){} 
+
+    try{
+      let seven = getDirection(field,directions.straightDown);
+      if(seven != null){
+        seven = getDirection(seven,directions.straightDown);
+        seven = getDirection(seven,directions.sideLeft);
+        if(seven.children[0] == undefined){
+          activeFieldArray.push(seven);
+          seven.classList.add("active");
+        }
+      }
+    }catch(error){}
+    try{
+      let eight = getDirection(field,directions.straightDown);
+      if(eight != null){
+        eight = getDirection(eight,directions.straightDown);
+        eight = getDirection(eight,directions.sideRight);
+        if(eight.children[0] == undefined){
+          activeFieldArray.push(eight);
+          eight.classList.add("active");
+        }
+    }
+    }catch(error){} 
   }
 
   const StraightMove = (field,player) => {

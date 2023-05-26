@@ -103,11 +103,16 @@ const SetArrayPointer = (x,y,gamepiece) => {
   }
 
   const RemoveActiveFields = () => {
+    console.log(activeFieldArray);
+
+
     activeFieldArray.forEach(field => {
-      field.classList.remove("active");
+      if(field != null)
+        field.classList.remove("active");
     });
     attackFieldArray.forEach(field => {
-      field.classList.remove("canAttack");
+      if(field != null)
+        field.classList.remove("canAttack");
     });
     lastActiveField = "empty";
     activeField.classList.toggle("active2");
