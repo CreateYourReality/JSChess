@@ -17,8 +17,8 @@ main {
   height: 100vh;
 }
 
-i {
-  font-size: 32px;
+img {
+  width: 40px;
   cursor: pointer;
 }
 
@@ -44,11 +44,7 @@ i {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: lightblue;
-}
-.white-player i {
-  text-shadow: 1px 1px 2px black;
-  color: white;
+  background-color: rgb(209, 227, 233);
 }
 
 .black-player {
@@ -59,11 +55,7 @@ i {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: lightcoral;
-}
-.black-player i {
-  text-shadow: 1px 1px 2px white;
-  color: black;
+  background-color: rgb(243, 200, 200);
 }
 
 .chessField:nth-child(n+1):nth-child(-n+8):nth-child(odd) {
