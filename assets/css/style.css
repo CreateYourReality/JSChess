@@ -8,6 +8,10 @@ html {
   font-size: 62.5%;
 }
 
+img {
+  max-width: 100%;
+}
+
 main {
   display: flex;
   align-items: center;
@@ -16,89 +20,51 @@ main {
   width: 100%;
   height: 100vh;
 }
-
-img {
-  width: 40px;
-  cursor: pointer;
-}
-
-.chess-board {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(8, 1fr);
-  border: 3px dotted blue;
-}
-.chess-board div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-}
-
-.white-player {
+main .white-player {
   margin: 5vh 0;
   height: 10vh;
   border-radius: 15px;
   border: 3px groove black;
+  min-width: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgb(209, 227, 233);
 }
-
-.black-player {
+main .black-player {
   margin: 5vh 0;
   height: 10vh;
   border-radius: 15px;
   border: 3px groove black;
+  min-width: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgb(243, 200, 200);
 }
-
-.chessField:nth-child(n+1):nth-child(-n+8):nth-child(odd) {
+main img {
+  width: 45px;
+  cursor: pointer;
+}
+main .chess-board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  border: 3px dotted blue;
+  position: relative;
+}
+main .chess-board .chessField:nth-child(n+1):nth-child(-n+8):nth-child(odd),
+main .chess-board .chessField:nth-child(n+9):nth-child(-n+16):nth-child(even),
+main .chess-board .chessField:nth-child(n+17):nth-child(-n+24):nth-child(odd),
+main .chess-board .chessField:nth-child(n+25):nth-child(-n+32):nth-child(even),
+main .chess-board .chessField:nth-child(n+33):nth-child(-n+40):nth-child(odd),
+main .chess-board .chessField:nth-child(n+41):nth-child(-n+48):nth-child(even),
+main .chess-board .chessField:nth-child(n+49):nth-child(-n+56):nth-child(odd),
+main .chess-board .chessField:nth-child(n+57):nth-child(-n+64):nth-child(even) {
   background-color: black;
   color: white;
 }
-
-.chessField:nth-child(n+9):nth-child(-n+16):nth-child(even) {
-  background-color: black;
-  color: white;
-}
-
-.chessField:nth-child(n+17):nth-child(-n+24):nth-child(odd) {
-  background-color: black;
-  color: white;
-}
-
-.chessField:nth-child(n+25):nth-child(-n+32):nth-child(even) {
-  background-color: black;
-  color: white;
-}
-
-.chessField:nth-child(n+33):nth-child(-n+40):nth-child(odd) {
-  background-color: black;
-  color: white;
-}
-
-.chessField:nth-child(n+41):nth-child(-n+48):nth-child(even) {
-  background-color: black;
-  color: white;
-}
-
-.chessField:nth-child(n+49):nth-child(-n+56):nth-child(odd) {
-  background-color: black;
-  color: white;
-}
-
-.chessField:nth-child(n+57):nth-child(-n+64):nth-child(even) {
-  background-color: black;
-  color: white;
-}
-
-.chessField:nth-child(n+1):nth-child(-n+64):hover {
+main .chess-board .chessField:nth-child(n+1):nth-child(-n+64):hover {
   opacity: 70%;
   border: 1px solid black;
   border-radius: 5px;
@@ -106,8 +72,7 @@ img {
   background-color: blue;
   color: red;
 }
-
-.chessField:nth-child(n+1):nth-child(-n+64).active {
+main .chess-board .chessField:nth-child(n+1):nth-child(-n+64).active {
   opacity: 70%;
   border: 1px solid black;
   border-radius: 5px;
@@ -115,8 +80,7 @@ img {
   background-color: orange;
   color: green;
 }
-
-.chessField:nth-child(n+1):nth-child(-n+64).active2 {
+main .chess-board .chessField:nth-child(n+1):nth-child(-n+64).active2 {
   opacity: 70%;
   border: 1px solid black;
   border-radius: 5px;
@@ -124,14 +88,37 @@ img {
   background-color: orangered;
   color: green;
 }
-
-.chessField:nth-child(n+1):nth-child(-n+64).canAttack {
+main .chess-board .chessField:nth-child(n+1):nth-child(-n+64).canAttack {
   opacity: 70%;
   border: 1px solid black;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   background-color: red;
   color: green;
+}
+main .chess-board aside {
+  opacity: 70%;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: yellowgreen;
+  font-family: Helvetica, Arial, sans-serif;
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  right: -150px;
+  bottom: 180px;
+  padding: 2px;
+}
+main .chess-board div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
 }
 
 /*# sourceMappingURL=style.css.map */
