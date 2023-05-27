@@ -9,3 +9,5 @@
 * Bauernumwandlung<br>
 * Rochade
 
+# Game Piece Collection
+![Alt text](/assets/img/Figures.png?raw=true "JS Game Pieces")
