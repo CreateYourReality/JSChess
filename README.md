@@ -8,6 +8,7 @@
 * En passant<br>
 * Rochade<br>
 * GameOver (Schach & Schachmatt)
+* Nach jedem Zug prüfen ob König(e) im Schach stehen
 
 # BUGFIX:
 * Bauer kann an der Startposition Figuren überspringen<br>
