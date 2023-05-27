@@ -63,7 +63,7 @@ main{
     }
     .chess-board{
         .chessField{
-            border:$BLACK .5px solid;
+        //    border:brown .1rem solid;
         }
         .chessField:nth-child(n+1):nth-child(-n+8):nth-child(ODD),
         .chessField:nth-child(n+9):nth-child(-n+16):nth-child(EVEN),
@@ -73,12 +73,30 @@ main{
         .chessField:nth-child(n+41):nth-child(-n+48):nth-child(EVEN),
         .chessField:nth-child(n+49):nth-child(-n+56):nth-child(ODD),
         .chessField:nth-child(n+57):nth-child(-n+64):nth-child(EVEN){
-            background-color: $BLACK;
+         //   background-color: $BLACK;
             color:$WHITE;
+            background-image: url("../img/GrasTile2.png");
+            background-size: contain;
         }
+
+        .chessField:nth-child(n+1):nth-child(-n+8):nth-child(EVEN),
+        .chessField:nth-child(n+9):nth-child(-n+16):nth-child(ODD),
+        .chessField:nth-child(n+17):nth-child(-n+24):nth-child(EVEN),
+        .chessField:nth-child(n+25):nth-child(-n+32):nth-child(ODD),
+        .chessField:nth-child(n+33):nth-child(-n+40):nth-child(EVEN),
+        .chessField:nth-child(n+41):nth-child(-n+48):nth-child(ODD),
+        .chessField:nth-child(n+49):nth-child(-n+56):nth-child(EVEN),
+        .chessField:nth-child(n+57):nth-child(-n+64):nth-child(ODD){
+         //   background-color: $BLACK;
+            color:$WHITE;
+            background-image: url("../img/DirtTile.png");
+            background-size: contain;
+        }
+
+
         .chessField:nth-child(n+1):nth-child(-n+64):hover {
             @include fieldDefault();
-            background-color: $BLUE;
+            background-color: $BLUE ;
             color:$RED;
         }
         
@@ -108,6 +126,7 @@ main{
         aside{
             @include fieldDefault;
             @include flexME();
+            flex-direction: column;
             background-color: $LIGHTGREEN;
             font-family:  Helvetica, Arial, sans-serif;
             position: absolute;

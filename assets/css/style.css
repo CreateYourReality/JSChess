@@ -54,9 +54,6 @@ main .chess-board {
   padding: 10px;
   position: relative;
 }
-main .chess-board .chessField {
-  border: black 0.5px solid;
-}
 main .chess-board .chessField:nth-child(n+1):nth-child(-n+8):nth-child(odd),
 main .chess-board .chessField:nth-child(n+9):nth-child(-n+16):nth-child(even),
 main .chess-board .chessField:nth-child(n+17):nth-child(-n+24):nth-child(odd),
@@ -65,8 +62,21 @@ main .chess-board .chessField:nth-child(n+33):nth-child(-n+40):nth-child(odd),
 main .chess-board .chessField:nth-child(n+41):nth-child(-n+48):nth-child(even),
 main .chess-board .chessField:nth-child(n+49):nth-child(-n+56):nth-child(odd),
 main .chess-board .chessField:nth-child(n+57):nth-child(-n+64):nth-child(even) {
-  background-color: black;
   color: white;
+  background-image: url("../img/GrasTile2.png");
+  background-size: contain;
+}
+main .chess-board .chessField:nth-child(n+1):nth-child(-n+8):nth-child(even),
+main .chess-board .chessField:nth-child(n+9):nth-child(-n+16):nth-child(odd),
+main .chess-board .chessField:nth-child(n+17):nth-child(-n+24):nth-child(even),
+main .chess-board .chessField:nth-child(n+25):nth-child(-n+32):nth-child(odd),
+main .chess-board .chessField:nth-child(n+33):nth-child(-n+40):nth-child(even),
+main .chess-board .chessField:nth-child(n+41):nth-child(-n+48):nth-child(odd),
+main .chess-board .chessField:nth-child(n+49):nth-child(-n+56):nth-child(even),
+main .chess-board .chessField:nth-child(n+57):nth-child(-n+64):nth-child(odd) {
+  color: white;
+  background-image: url("../img/DirtTile.png");
+  background-size: contain;
 }
 main .chess-board .chessField:nth-child(n+1):nth-child(-n+64):hover {
   opacity: 70%;
@@ -108,6 +118,7 @@ main .chess-board aside {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   background-color: yellowgreen;
   font-family: Helvetica, Arial, sans-serif;
   position: absolute;

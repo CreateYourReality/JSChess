@@ -270,6 +270,25 @@ const ChangePlayerTurnText = () => {
 }
 
 const scoreBarPlayer = document.createElement("h2");
+const borderCheckBox = document.createElement("input");
+let isBorder = false;
+ 
+
+const ToogleBorder = () => {
+  if(isBorder){
+    allChessFields.forEach((field) => {
+      field.style.border = "none";
+    })
+    isBorder = false;
+  }else{
+    allChessFields.forEach((field) => {
+      field.style.border = "brown .1rem solid";
+    })
+    isBorder = true;
+  }
+}
+
+
 
 const CreateChessField = () => {
   for(let y = 0; y < chessColumns;y++){
@@ -286,8 +305,17 @@ const CreateChessField = () => {
   const scoreBar = document.createElement("aside");
   ChangePlayerTurnText();
   scoreBar.appendChild(scoreBarPlayer);
+  borderCheckBox.addEventListener("click",ToogleBorder);
+  borderCheckBox.setAttribute("type","checkbox");
+  borderCheckBox.setAttribute("name","showGrid");
+  let div = document.createElement("div");
+  borderCheckBoxText = document.createElement("label");
+  borderCheckBoxText.setAttribute("for","showGrid");
+  borderCheckBoxText.textContent = "Show Grid";
+  div.appendChild(borderCheckBox);
+  div.appendChild(borderCheckBoxText);
+  scoreBar.appendChild(div);
   chessBoard.appendChild(scoreBar)
-
 }
 
 function allowDrop(ev) {
