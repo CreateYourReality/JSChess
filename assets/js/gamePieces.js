@@ -319,6 +319,13 @@ const CreateChessField = () => {
   div2.appendChild(darkmodeCheckBoxText);
   scoreBar.appendChild(div);
   scoreBar.appendChild(div2);
+
+  let pTag = document.createElement("p");
+  pTag.classList.add("infoText");
+  pTag.textContent = "DRAG & DROP TO MOVE AND ATTACK!";
+
+  scoreBar.appendChild(pTag);
+
   chessBoard.appendChild(scoreBar)
 }
 

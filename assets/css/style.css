@@ -151,12 +151,31 @@ main .chess-board aside {
   bottom: 180px;
   padding: 2px;
 }
+main .chess-board aside .infoText {
+  text-align: center;
+  color: red;
+  text-shadow: black 1px 1px 1px;
+  position: absolute;
+  font-size: clamp(1rem, 1.6vw, 2rem);
+  bottom: -80px;
+  font-weight: 900;
+  animation: pulse 3s linear infinite;
+}
 main .chess-board div {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 60px;
   height: 60px;
+}
+
+@keyframes pulse {
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

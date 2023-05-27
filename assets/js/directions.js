@@ -369,6 +369,33 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
     }
   }
 
+  const EnPassant = () => {
+    //NUR VON BAUERN AUSFÜHRBAR
+    //NUR GEGEN BAUERN AUSFÜHRBAR
+    //NUR MÖGLICH WENN BRETTHÄLFTE UM GENAU 1 ÜBERQUERT WURDE (w = D | b = E)
+    //DER GEGENERBAUER MUSS EINEN DOPPELSCHRITT NEBEN DEINEN BAUERN MACHEN
+    //DER NUR EINEN ZUG DANACH ZEIT
+    //WENN ALLES ERFÜLLT : DU KANNST DEN FEINDLICHEN BAUERN EN PASSANT ANGREIFEN (NORMALER ANRIFF UND DANN 1 FELD VORRÜCKEN)
+    //(Der Bauer wird geschlagen, als hätte er nur einen einfachen Schritt gemacht)
+  }
+
+  const Rochade = () => {
+    //BENÖTIGT DEN KÖNIG UND EINEN VON BEIDEN TÜRMEN
+    //DARF NUR EINMAL PRO PARTIE GEMACHT WERDEN
+    //ES GIBT EINE KURZE UND EINE LANGE ROCHADE
+    //KÖNIG UND BETROFFENER TURM DÜRFEN NOCH NICHT BEWEGT WORDEN SEIN
+    //KÖNIG DARF NICHT ROCHADE MACHEN WENN ER IM SCHACH STEHT
+    //DIE FELDER ZWISCHEN KÖNIG UND AUSGEWÄHLTEM TURM MÜSSEN FREI SEIN
+    //KURZ WEIß: DIE FELDER H4,H5 und H6 dürfen nicht im Schach stehen (bedroht sein)
+    //LANG WEIß: DIE FELDER H4,H3 und H2 dürfen nicht im Schach stehen (bedroht sein)
+    //KURZ SCHWARZ: DIE FELDER A4,A5 und A6 dürfen nicht im Schach stehen (bedroht sein)
+    //LANG SCHWARZ: DIE FELDER A4,A3 und A2 dürfen nicht im Schach stehen (bedroht sein)
+    //KURZ WEIß: König von H4 nach H2 (zwei Felder) - Turm überspringt dann den König auf H3
+    //LANG WEIß: König von H4 nach H6 (zwei Felder) - Turm überspringt dann den König auf H5
+    //KURZ SCHWARZ: König von A4 nach H2 (zwei Felder) - Turm überspringt dann den König auf A3
+    //LANG SCHWARZ: König von A4 nach H6 (zwei Felder) - Turm überspringt dann den König auf A5
+  }
+
   // Bauernumwandlung
   const PawnPromotion = (field,figure) => {
     if(field.id.slice(0,1) == "A" && figure.slice(0,-1) == "wPawn"){
