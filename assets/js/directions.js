@@ -291,7 +291,6 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
         }
       }
     }catch(error){} 
-
     try{
       let seven = getDirection(field,directions.straightDown);
       if(seven != null){
