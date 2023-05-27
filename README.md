@@ -7,6 +7,7 @@
 * KNIGHT Attack<br>
 * En passant<br>
 * Rochade<br>
+* GameOver (Schach & Schachmatt)
 
 # BUGFIX:
 * Bauer kann an der Startposition Figuren überspringen<br>
