@@ -6,10 +6,15 @@
 
 html {
   font-size: 62.5%;
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 img {
   max-width: 100%;
+}
+
+h2 {
+  color: black;
 }
 
 main {
@@ -47,6 +52,8 @@ main img {
   cursor: pointer;
 }
 main .chess-board {
+  cursor: pointer;
+  color: rgb(77, 77, 77);
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -63,8 +70,7 @@ main .chess-board .chessField:nth-child(n+33):nth-child(-n+40):nth-child(odd),
 main .chess-board .chessField:nth-child(n+41):nth-child(-n+48):nth-child(even),
 main .chess-board .chessField:nth-child(n+49):nth-child(-n+56):nth-child(odd),
 main .chess-board .chessField:nth-child(n+57):nth-child(-n+64):nth-child(even) {
-  color: white;
-  background-image: url("../img/GrasTile2.png");
+  background: url("../img/GrasTile2.png") no-repeat center;
   background-size: contain;
 }
 main .chess-board .chessField:nth-child(n+1):nth-child(-n+8):nth-child(even),
@@ -75,8 +81,7 @@ main .chess-board .chessField:nth-child(n+33):nth-child(-n+40):nth-child(even),
 main .chess-board .chessField:nth-child(n+41):nth-child(-n+48):nth-child(odd),
 main .chess-board .chessField:nth-child(n+49):nth-child(-n+56):nth-child(even),
 main .chess-board .chessField:nth-child(n+57):nth-child(-n+64):nth-child(odd) {
-  color: white;
-  background-image: url("../img/DirtTile.png");
+  background: url("../img/DirtTile.png") no-repeat center;
   background-size: contain;
 }
 main .chess-board .chessField:nth-child(n+1):nth-child(-n+64):hover {
@@ -84,32 +89,33 @@ main .chess-board .chessField:nth-child(n+1):nth-child(-n+64):hover {
   border: 1px solid black;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-  background-color: blue;
-  color: red;
+  background: #179eb4;
+  font-size: clamp(1rem, 1.2vw, 1.3rem);
+  color: black;
 }
 main .chess-board .chessField:nth-child(n+1):nth-child(-n+64).active {
   opacity: 70%;
   border: 1px solid black;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-  background-color: orange;
-  color: green;
+  background: orange;
+  color: black;
+  font-weight: 900;
+  font-size: clamp(1rem, 1.2vw, 1.5rem);
 }
 main .chess-board .chessField:nth-child(n+1):nth-child(-n+64).active2 {
   opacity: 70%;
   border: 1px solid black;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-  background-color: orangered;
-  color: green;
+  background: orangered;
 }
 main .chess-board .chessField:nth-child(n+1):nth-child(-n+64).canAttack {
   opacity: 70%;
   border: 1px solid black;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-  background-color: red;
-  color: green;
+  background: red;
 }
 main .chess-board aside {
   opacity: 70%;
