@@ -315,7 +315,6 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
     }catch(error){} 
   }
 
-
   const ChooseNewFigure = () => {
     let chooseNewFigure = prompt("In was soll sich der Bauer verwandeln? [1]ROOK [2]QUEEN [3]KNIGHT [4]BISHOP");
       switch(Number(chooseNewFigure)){
@@ -326,12 +325,48 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
         default: ChooseNewFigure();
       }
   }
+
+  let rookCounter = 3;
+  let queenCounter = 2;
+  let knightCounter = 3;
+  let bishopCounter = 3;
   
   const GetNewFigure = (field,figure) => {
     playerturn ? whitePlayer.appendChild(document.getElementById(figure)) : blackPlayer.appendChild(document.getElementById(figure));
     let pickNewFigure = ChooseNewFigure();
-    console.log(field);
-
+    let letter;
+    let chooseTeam;
+    let chooseTeam2;
+    if(playerturn){
+      letter = "w";
+      chooseTeam = 0;
+      chooseTeam2 = 0;
+    }else{
+      letter = "b";
+      chooseTeam = 2;
+      chooseTeam2 = 1;
+    }
+    if(pickNewFigure==1){
+      document.getElementById(field.id).innerHTML += Rook[chooseTeam].tower;
+      document.getElementById(field.id).children[0].id =letter+"Rook"+rookCounter;
+      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+"Rook"+2); //rookCounter. muss eine zahl hier haben die in gamepiece vorhanden ist
+      rookCounter++;
+    }else if(pickNewFigure==2){
+      document.getElementById(field.id).innerHTML += Queen[chooseTeam2].tower;
+      document.getElementById(field.id).children[0].id =letter+"Queen"+queenCounter;
+      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+"Queen"+1); 
+      queenCounter++;
+    }else if(pickNewFigure==3){
+      document.getElementById(field.id).innerHTML += Knight[chooseTeam].tower;
+      document.getElementById(field.id).children[0].id =letter+"Knight"+knightCounter;
+      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+"Knight"+2); 
+      knightCounter++;
+    }else if(pickNewFigure==4){
+      document.getElementById(field.id).innerHTML += Bishop[chooseTeam].tower;
+      document.getElementById(field.id).children[0].id =letter+"Bishop"+bishopCounter;
+      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+"Bishop"+2); 
+      bishopCounter++;
+    }
   }
 
   // Bauernumwandlung
@@ -347,7 +382,6 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
     }
   }
 
-
   const StraightMove = (field,enemy) => {
     if(enemy == "b"){
       SetMoveField(field,directions.straight[0],directions.straight[1]);
@@ -362,35 +396,4 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
         SetMoveField(newField,directions.straightDown[0],directions.straightDown[1]);
       }
     }
-/*
-    if(player == "b"){ //ich weiß, gegner schwarz
-      let up = getDirection(field,directions.straight); 
-      if(up !=  null){
-        if(field.id.slice(0,1) == "G"){ //Bauer noch nicht bewegt
-          let up2 = getDirection(up,directions.straight);
-          if(up2 != null){
-            activeFieldArray.push(up2);
-            up2.classList.add("active");
-          }
-        } 
-        activeFieldArray.push(up);
-        up.classList.add("active");
-      }
-    }else{
-      let down = getDirection(field,directions.straightDown); 
-      if(down !=  null){
-        if(field.id.slice(0,1) == "B"){ //Bauer noch nicht bewegt
-          let down2 = getDirection(down,directions.straightDown);
-          if(down2 != null){
-            activeFieldArray.push(down2);
-            down2.classList.add("active");
-          }
-        } 
-        activeFieldArray.push(down);
-        down.classList.add("active");
-      }
-    }
-*/
-
   }
-

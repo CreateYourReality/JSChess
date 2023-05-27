@@ -4,14 +4,14 @@ const blackPlayer = document.querySelector(".black-player");
 const chessRows = 8;
 const chessColumns = 8;
 let chessBoardFields = [
-  [0,1,2,3,4,5,6,7],
-  [0,1,2,3,4,5,6,7],
-  [0,1,2,3,4,5,6,7],
-  [0,1,2,3,4,5,6,7],
-  [0,1,2,3,4,5,6,7],
-  [0,1,2,3,4,5,6,7],
-  [0,1,2,3,4,5,6,7],
-  [0,1,2,3,4,5,6,7]];
+  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
+  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
+  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
+  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
+  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
+  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
+  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
+  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"]];
 let activeField = "0";
 let lastActiveField = "empty";
 let allChessFields = [];
@@ -49,7 +49,6 @@ const SetArrayPointer = (x,y,gamepiece) => {
     } 
   }
 
-
   const CreateOptions = () => {
     allChessFields.forEach(field => { //das angeklickte feld auch wieder abwählen können
       field.addEventListener("click", () => {
@@ -63,9 +62,7 @@ const SetArrayPointer = (x,y,gamepiece) => {
               let currentFigure = figure.id;
               colorCurrentFigure = currentFigure.slice(0,1) == "w" ? colorCurrentFigure = "b" : colorCurrentFigure = "w";
               currentFigure = currentFigure.slice(1,currentFigure.length-1); // Überprüfe ob die Figur vom Weißen(w...) oder Schwarzen(b...) Spieler ist
-
               if(colorCurrentFigure == "b" && playerturn == false){
-           //     console.log("weißer spieler ist dran");
                 switch(currentFigure){
                   case "Pawn": ShowFigureOptions(field, "straight", "fork", colorCurrentFigure);break;
                   case "King": ShowFigureOptions(field, "around", "around", colorCurrentFigure);break;
@@ -132,6 +129,10 @@ const SetArrayPointer = (x,y,gamepiece) => {
     try{
       let tempTarget = ev.target;
       if(ev.target.classList.contains("active") && document.getElementById(data).parentElement.classList.contains("active2")){
+        //idee, jedes mal wenn das feld betreten wurde, +x und fußstapfen einfügen
+        let x = LetterToNumber(document.getElementById(data).parentElement.id.slice(0,1));
+        let y = document.getElementById(data).parentElement.id.slice(1,2);
+        SetArrayPointer(x,y,"FIELDX"); 
         ev.target.appendChild(document.getElementById(data));
         SetNewPositions(tempTarget,data);
         PawnPromotion(tempTarget,data);
@@ -139,6 +140,10 @@ const SetArrayPointer = (x,y,gamepiece) => {
         return;  
       }
       if(ev.target.classList.contains("canAttack") && document.getElementById(data).parentElement.classList.contains("active2")){
+          //idee, jedes mal wenn das feld betreten wurde, +x und fußstapfen einfügen
+          let x = LetterToNumber(document.getElementById(data).parentElement.id.slice(0,1));
+          let y = document.getElementById(data).parentElement.id.slice(1,2);
+          SetArrayPointer(x,y,"FIELDX"); 
           ev.target.appendChild(document.getElementById(data));
           playerturn ? whitePlayer.appendChild(ev.target.children[0]) : blackPlayer.appendChild(ev.target.children[0]);
           SetNewPositions(tempTarget,data);
@@ -147,6 +152,10 @@ const SetArrayPointer = (x,y,gamepiece) => {
           return;
         }
       if(ev.target.parentElement.classList.contains("canAttack") && document.getElementById(data).parentElement.classList.contains("active2")){
+          //idee, jedes mal wenn das feld betreten wurde, +x und fußstapfen einfügen
+          let x = LetterToNumber(document.getElementById(data).parentElement.id.slice(0,1));
+          let y = document.getElementById(data).parentElement.id.slice(1,2);
+          SetArrayPointer(x,y,"FIELDX"); 
           tempTarget = ev.target.parentElement;
           playerturn ? whitePlayer.appendChild(ev.target) : blackPlayer.appendChild(ev.target);
           tempTarget.appendChild(document.getElementById(data));

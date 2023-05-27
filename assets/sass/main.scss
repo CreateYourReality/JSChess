@@ -14,7 +14,6 @@ img{
 }
 //deaktiviert das Markieren von Text
 ::selection { background: none; }
-
 $GREEN: green;
 $BLACK: black;
 $GREY: rgb(77, 77, 77);
@@ -27,6 +26,8 @@ $LIGHTGREEN:yellowgreen;
 $BISQUE:bisque;
 $DIMGREY: dimgrey;
 $BROWN: brown;
+$PLAYER1:rgb(209, 227, 233);
+$PLAYER2:rgb(243, 200, 200);
 
 @mixin playerDefault{
     margin: 5vh 0;
@@ -63,7 +64,7 @@ label{
 }
 
 .showGrid{
- border: $BROWN .1rem solid;
+    border: $BROWN .1rem solid;
 }
 
 main{
@@ -75,23 +76,18 @@ main{
     .white-player{
         @include playerDefault();
         @include flexME();
-
-        background-color: rgb(209, 227, 233);
+        background-color: $PLAYER1;
     }
     .black-player{
         @include playerDefault();
         @include flexME();
-
-        background-color: rgb(243, 200, 200);
+        background-color: $PLAYER2;
     }
     img{
         width: 45px;
         cursor:pointer;
     }
     .chess-board{
-        .chessField{
-        //    border:brown .1rem solid;
-        }
         .chessField:nth-child(n+1):nth-child(-n+8):nth-child(ODD),
         .chessField:nth-child(n+9):nth-child(-n+16):nth-child(EVEN),
         .chessField:nth-child(n+17):nth-child(-n+24):nth-child(ODD),
@@ -100,8 +96,6 @@ main{
         .chessField:nth-child(n+41):nth-child(-n+48):nth-child(EVEN),
         .chessField:nth-child(n+49):nth-child(-n+56):nth-child(ODD),
         .chessField:nth-child(n+57):nth-child(-n+64):nth-child(EVEN){
-         //   background-color: $BLACK;
-     //       color:$WHITE;
             background: url("../img/GrasTile2.png") no-repeat center;
             background-size: contain;
         }
@@ -114,46 +108,34 @@ main{
         .chessField:nth-child(n+41):nth-child(-n+48):nth-child(ODD),
         .chessField:nth-child(n+49):nth-child(-n+56):nth-child(EVEN),
         .chessField:nth-child(n+57):nth-child(-n+64):nth-child(ODD){
-         //   background-color: $BLACK;
-      //      color:$WHITE;
             background: url("../img/DirtTile.png") no-repeat center;
             background-size: contain;
         }
-
-
         //ALLG. HOVER
         .chessField:nth-child(n+1):nth-child(-n+64):hover {
             @include fieldDefault();
             background: $BLUE ;
             font-size: clamp(1rem,1.2vw,1.3rem);    
-            color:$BLACK;
         }
-        
         //HERE I CAN MOVE
         .chessField:nth-child(n+1):nth-child(-n+64).active {
             @include fieldDefault();
             background: $ORANGE;
-            color: $BLACK;
             font-weight: 900;
             font-size: clamp(1rem,1.2vw,1.5rem);
         }
-        
         //HERE I AM OR I CLICKED
         .chessField:nth-child(n+1):nth-child(-n+64).active2 {
             @include fieldDefault();
             background:$ORANGERED;
-        //    color:$GREEN;
         }
-        
         //HERE I CAN ATTACK
         .chessField:nth-child(n+1):nth-child(-n+64).canAttack {
             @include fieldDefault();
             background: $RED;
-      //      color:$GREEN;
-      
         }
         cursor: pointer;
-        color: $GREY;
+        color: $BLACK;
         box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
         display: grid;
         grid-template-columns: repeat(8,1fr);
@@ -181,9 +163,3 @@ main{
         }  
     } 
 }
-
-
-
-
-
-

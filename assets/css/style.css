@@ -71,7 +71,7 @@ main img {
 }
 main .chess-board {
   cursor: pointer;
-  color: rgb(77, 77, 77);
+  color: black;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -109,7 +109,6 @@ main .chess-board .chessField:nth-child(n+1):nth-child(-n+64):hover {
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   background: #179eb4;
   font-size: clamp(1rem, 1.2vw, 1.3rem);
-  color: black;
 }
 main .chess-board .chessField:nth-child(n+1):nth-child(-n+64).active {
   opacity: 70%;
@@ -117,7 +116,6 @@ main .chess-board .chessField:nth-child(n+1):nth-child(-n+64).active {
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   background: orange;
-  color: black;
   font-weight: 900;
   font-size: clamp(1rem, 1.2vw, 1.5rem);
 }
