@@ -6,8 +6,13 @@
 # TODO:<br>
 * KNIGHT Attack<br>
 * En passant<br>
-* Bauernumwandlung<br>
-* Rochade
-* BUGFIX - PAWN start walk
+* Rochade<br>
+* GameOver (Schach & Schachmatt)
+* Nach jedem Zug prüfen ob König(e) im Schach stehen
+
+# BUGFIX:
+* Bauer kann an der Startposition Figuren überspringen<br>
+* Kann nicht laufen nach Bauernumwandlung<br>
+
 # Game Piece Collection
 ![Alt text](/assets/img/Figures.png?raw=true "JS Game Pieces")
