@@ -26,6 +26,7 @@ $ORANGE: orange;
 $LIGHTGREEN:yellowgreen;
 $BISQUE:bisque;
 $DIMGREY: dimgrey;
+$BROWN: brown;
 
 @mixin playerDefault{
     margin: 5vh 0;
@@ -54,10 +55,15 @@ h2{
 
 label{
     color: $BLACK;
+    margin-left: 5px;
 }
 
 .darkmode{
     background-color: $DIMGREY;
+}
+
+.showGrid{
+ border: $BROWN .1rem solid;
 }
 
 main{

@@ -23,10 +23,15 @@ h2 {
 
 label {
   color: black;
+  margin-left: 5px;
 }
 
 .darkmode {
   background-color: dimgrey;
+}
+
+.showGrid {
+  border: brown 0.1rem solid;
 }
 
 main {

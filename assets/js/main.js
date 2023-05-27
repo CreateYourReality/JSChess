@@ -103,9 +103,6 @@ const SetArrayPointer = (x,y,gamepiece) => {
   }
 
   const RemoveActiveFields = () => {
-    console.log(activeFieldArray);
-
-
     activeFieldArray.forEach(field => {
       if(field != null)
         field.classList.remove("active");
@@ -137,6 +134,7 @@ const SetArrayPointer = (x,y,gamepiece) => {
       if(ev.target.classList.contains("active") && document.getElementById(data).parentElement.classList.contains("active2")){
         ev.target.appendChild(document.getElementById(data));
         SetNewPositions(tempTarget,data);
+        PawnPromotion(tempTarget,data);
         RemoveActiveFields();
         return;  
       }
@@ -144,6 +142,7 @@ const SetArrayPointer = (x,y,gamepiece) => {
           ev.target.appendChild(document.getElementById(data));
           playerturn ? whitePlayer.appendChild(ev.target.children[0]) : blackPlayer.appendChild(ev.target.children[0]);
           SetNewPositions(tempTarget,data);
+          PawnPromotion(tempTarget,data);
           RemoveActiveFields();
           return;
         }
@@ -152,6 +151,7 @@ const SetArrayPointer = (x,y,gamepiece) => {
           playerturn ? whitePlayer.appendChild(ev.target) : blackPlayer.appendChild(ev.target);
           tempTarget.appendChild(document.getElementById(data));
           SetNewPositions(tempTarget,data);
+          PawnPromotion(tempTarget,data);
           RemoveActiveFields();
           return;
       }    

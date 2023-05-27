@@ -186,7 +186,7 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
       if(!SetMoveField(field,directions.forkLeftDown[0]+i,directions.forkLeftDown[1]-i)){
         break;
       }
-    }
+    } 
   }
 
   const PlusMove = (field) => {
@@ -221,7 +221,7 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
     }
   } */
 
-
+  //...xD
   const JumpMove = (field,player) => {
 
     try{
@@ -315,14 +315,63 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
     }catch(error){} 
   }
 
-  const StraightMove = (field,player) => {
+
+  const ChooseNewFigure = () => {
+    let chooseNewFigure = prompt("In was soll sich der Bauer verwandeln? [1]ROOK [2]QUEEN [3]KNIGHT [4]BISHOP");
+      switch(Number(chooseNewFigure)){
+        case 1: console.log("PAWN DIGITIERT ZUUUUUU... ROOOOOOK");return 1;
+        case 2: console.log("PAWN DIGITIERT ZUUUUUU... QUEEEEEN");return 2;
+        case 3: console.log("PAWN DIGITIERT ZUUUUUU... KNIIIGHT");return 3;
+        case 4: console.log("PAWN DIGITIERT ZUUUUUU... BIIISHOP");return 4;
+        default: ChooseNewFigure();
+      }
+  }
+  
+  const GetNewFigure = (field,figure) => {
+    playerturn ? whitePlayer.appendChild(document.getElementById(figure)) : blackPlayer.appendChild(document.getElementById(figure));
+    let pickNewFigure = ChooseNewFigure();
+    console.log(field);
+
+  }
+
+  // Bauernumwandlung
+  const PawnPromotion = (field,figure) => {
+    if(field.id.slice(0,1) == "A" && figure.slice(0,-1) == "wPawn"){
+      console.log("w choose your new figure");
+      GetNewFigure(field,figure);
+    }
+
+    if(field.id.slice(0,1) == "H" && figure.slice(0,-1) == "bPawn"){
+      console.log("b choose your new figure");
+      GetNewFigure(field,figure);
+    }
+  }
+
+
+  const StraightMove = (field,enemy) => {
+    if(enemy == "b"){
+      SetMoveField(field,directions.straight[0],directions.straight[1]);
+      if(field.id.slice(0,1) == "G"){ //Blauer Spieler hat sein Bauern noch nicht bewegt
+        const newField = getDirection(field,directions.straight);
+        SetMoveField(newField,directions.straight[0],directions.straight[1]);  
+      }
+    }else{
+      SetMoveField(field,directions.straightDown[0],directions.straightDown[1]);
+      if(field.id.slice(0,1) == "B"){ //Roter Spieler hat sein Bauern noch nicht bewegt
+        const newField = getDirection(field,directions.straightDown);
+        SetMoveField(newField,directions.straightDown[0],directions.straightDown[1]);
+      }
+    }
+/*
     if(player == "b"){ //ich weiß, gegner schwarz
       let up = getDirection(field,directions.straight); 
       if(up !=  null){
         if(field.id.slice(0,1) == "G"){ //Bauer noch nicht bewegt
           let up2 = getDirection(up,directions.straight);
-          activeFieldArray.push(up2);
-          up2.classList.add("active");
+          if(up2 != null){
+            activeFieldArray.push(up2);
+            up2.classList.add("active");
+          }
         } 
         activeFieldArray.push(up);
         up.classList.add("active");
@@ -332,12 +381,16 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
       if(down !=  null){
         if(field.id.slice(0,1) == "B"){ //Bauer noch nicht bewegt
           let down2 = getDirection(down,directions.straightDown);
-          activeFieldArray.push(down2);
-          down2.classList.add("active");
+          if(down2 != null){
+            activeFieldArray.push(down2);
+            down2.classList.add("active");
+          }
         } 
         activeFieldArray.push(down);
         down.classList.add("active");
       }
     }
+*/
+
   }
 

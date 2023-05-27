@@ -272,22 +272,12 @@ const ChangePlayerTurnText = () => {
 const scoreBarPlayer = document.createElement("h2");
 const borderCheckBox = document.createElement("input");
 const darkmodeCheckBox = document.createElement("input");
-const main = document.querySelector("main");
-let isBorder = false;
- 
+const main = document.querySelector("main"); 
 
 const ToogleBorder = () => {
-  if(isBorder){
     allChessFields.forEach((field) => {
-      field.style.border = "none";
-    })
-    isBorder = false;
-  }else{
-    allChessFields.forEach((field) => {
-      field.style.border = "brown .1rem solid";
-    })
-    isBorder = true;
-  }
+      field.classList.toggle("showGrid");
+    }) 
 }
 
 const ToogleDarkmode = () => {
