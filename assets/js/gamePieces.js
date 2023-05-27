@@ -271,6 +271,8 @@ const ChangePlayerTurnText = () => {
 
 const scoreBarPlayer = document.createElement("h2");
 const borderCheckBox = document.createElement("input");
+const darkmodeCheckBox = document.createElement("input");
+const main = document.querySelector("main");
 let isBorder = false;
  
 
@@ -288,7 +290,9 @@ const ToogleBorder = () => {
   }
 }
 
-
+const ToogleDarkmode = () => {
+  main.classList.toggle("darkmode")
+}
 
 const CreateChessField = () => {
   for(let y = 0; y < chessColumns;y++){
@@ -308,13 +312,23 @@ const CreateChessField = () => {
   borderCheckBox.addEventListener("click",ToogleBorder);
   borderCheckBox.setAttribute("type","checkbox");
   borderCheckBox.setAttribute("name","showGrid");
+  darkmodeCheckBox.addEventListener("click",ToogleDarkmode);
+  darkmodeCheckBox.setAttribute("type","checkbox");
+  darkmodeCheckBox.setAttribute("name","darkMode");
   let div = document.createElement("div");
+  let div2 = document.createElement("div"); 
   borderCheckBoxText = document.createElement("label");
+  darkmodeCheckBoxText = document.createElement("label");
+  darkmodeCheckBoxText.setAttribute("for","darkMode");
   borderCheckBoxText.setAttribute("for","showGrid");
+  darkmodeCheckBoxText.textContent = "Dark Mode";
   borderCheckBoxText.textContent = "Show Grid";
   div.appendChild(borderCheckBox);
   div.appendChild(borderCheckBoxText);
+  div2.appendChild(darkmodeCheckBox);
+  div2.appendChild(darkmodeCheckBoxText);
   scoreBar.appendChild(div);
+  scoreBar.appendChild(div2);
   chessBoard.appendChild(scoreBar)
 }
 
