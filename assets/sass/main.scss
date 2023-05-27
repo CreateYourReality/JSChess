@@ -50,11 +50,13 @@ main{
     .white-player{
         @include playerDefault();
         @include flexME();
+
         background-color: rgb(209, 227, 233);
     }
     .black-player{
         @include playerDefault();
         @include flexME();
+
         background-color: rgb(243, 200, 200);
     }
     img{
@@ -117,6 +119,7 @@ main{
             background-color: $RED;
             color:$GREEN;
         }
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
         display: grid;
         grid-template-columns: repeat(8,1fr);
         grid-template-rows: repeat(8,1fr);
