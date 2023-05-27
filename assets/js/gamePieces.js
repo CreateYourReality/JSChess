@@ -263,9 +263,9 @@ const CreateNewGame = () => {
 
 const ChangePlayerTurnText = () => {
   if(playerturn == false){
-    scoreBarPlayer.textContent = "WHITE TURN";
+    scoreBarPlayer.textContent = "BLUE TURN";
   }else {
-    scoreBarPlayer.textContent =  "BLACK TURN";
+    scoreBarPlayer.textContent =  "RED TURN";
   }
 }
 
