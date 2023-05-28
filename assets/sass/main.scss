@@ -1,3 +1,12 @@
+@keyframes pulse {
+    100%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.05);
+    }
+}
+
 *{
     margin:0;
     padding:0;
@@ -12,22 +21,6 @@ html{
 img{
     max-width: 100%;
 }
-//deaktiviert das Markieren von Text
-::selection { background: none; }
-$GREEN: green;
-$BLACK: black;
-$GREY: rgb(77, 77, 77);
-$WHITE: white;
-$ORANGERED: orangered;
-$BLUE: #179eb4;
-$RED: red;
-$ORANGE: orange;
-$LIGHTGREEN:yellowgreen;
-$BISQUE:bisque;
-$DIMGREY: dimgrey;
-$BROWN: brown;
-$PLAYER1:rgb(209, 227, 233);
-$PLAYER2:rgb(243, 200, 200);
 
 @mixin playerDefault{
     margin: 5vh 0;
@@ -50,6 +43,23 @@ $PLAYER2:rgb(243, 200, 200);
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
+//deaktiviert das Markieren von Text
+::selection { background: none; }
+$GREEN: green;
+$BLACK: black;
+$GREY: rgb(77, 77, 77);
+$WHITE: white;
+$ORANGERED: orangered;
+$BLUE: #179eb4;
+$RED: red;
+$ORANGE: orange;
+$LIGHTGREEN:yellowgreen;
+$BISQUE:bisque;
+$DIMGREY: dimgrey;
+$BROWN: brown;
+$PLAYER1:rgb(209, 227, 233);
+$PLAYER2:rgb(243, 200, 200);
+
 h2{
     color:$BLACK;
 }
@@ -59,17 +69,7 @@ label{
     margin-left: 5px;
 }
 
-.darkmode{
-    background-color: $DIMGREY;
-}
-
-.showGrid{
-    border: $BROWN .1rem solid;
-}
-
-
-
-main{
+main{   
     @include flexME();
     flex-direction: column;
     width: 100%;
@@ -176,12 +176,10 @@ main{
     } 
 }
 
-@keyframes pulse {
-    100%{
-        transform: scale(1);
-    }
-    50%{
-        transform: scale(1.05);
-    }
-    
+.darkmode{
+    background-color: $DIMGREY;
+}
+
+.showGrid{
+    border: $BROWN .1rem solid;
 }

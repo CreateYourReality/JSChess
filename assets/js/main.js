@@ -91,8 +91,6 @@ const SetArrayPointer = (x,y,gamepiece) => {
     })
   }
 
-
-
   const ChangePlayer = () => {
     playerturn = !playerturn;
  //   playerturn == true ? alert("BLACK") : alert("WHITE");
@@ -112,7 +110,6 @@ const SetArrayPointer = (x,y,gamepiece) => {
     activeField.classList.toggle("active2");
       
   }
-
 
   const SetNewPositions = (tempTarget,data) => {
     //Wenn Figur bewegt wird, setze hiermit ihre Position im Array fest

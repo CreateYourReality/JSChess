@@ -1,6 +1,4 @@
 
-
-
 /*
 König - King.
 Dame - Queen.
@@ -9,7 +7,6 @@ Läufer - Bishop.
 Springer - Knight.
 Bauer - Pawn. 
 */
-
 const GamePiece = [
 
   Bishop = [
@@ -218,6 +215,11 @@ const GamePiece = [
   ]
 ]
 
+const scoreBarPlayer = document.createElement("h2");
+const borderCheckBox = document.createElement("input");
+const darkmodeCheckBox = document.createElement("input");
+const main = document.querySelector("main"); 
+
 const CreateNewGame = () => {
   CreateChessField();
   allChessFields = document.querySelectorAll(".chessField");
@@ -269,11 +271,6 @@ const ChangePlayerTurnText = () => {
   }
 }
 
-const scoreBarPlayer = document.createElement("h2");
-const borderCheckBox = document.createElement("input");
-const darkmodeCheckBox = document.createElement("input");
-const main = document.querySelector("main"); 
-
 const ToogleBorder = () => {
     allChessFields.forEach((field) => {
       field.classList.toggle("showGrid");
@@ -319,13 +316,10 @@ const CreateChessField = () => {
   div2.appendChild(darkmodeCheckBoxText);
   scoreBar.appendChild(div);
   scoreBar.appendChild(div2);
-
   let pTag = document.createElement("p");
   pTag.classList.add("infoText");
   pTag.textContent = "DRAG & DROP TO MOVE AND ATTACK!";
-
   scoreBar.appendChild(pTag);
-
   chessBoard.appendChild(scoreBar)
 }
 
@@ -364,5 +358,3 @@ const LetterToNumber = (letter) => {
       default : break;
   }
 }
-
-

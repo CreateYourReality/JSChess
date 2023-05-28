@@ -212,7 +212,6 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
     } 
   }
 
-
  /* const SetJumpField = (field,a,b) => {
     let activeField = getDirection(field,[a, b]);      
     if(activeField !=  null){
@@ -326,45 +325,59 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
       }
   }
 
-  let rookCounter = 3;
+  let rookCounter = 4;
   let queenCounter = 2;
-  let knightCounter = 3;
-  let bishopCounter = 3;
-  
+  let knightCounter = 4;
+  let bishopCounter = 4;
+
   const GetNewFigure = (field,figure) => {
     playerturn ? whitePlayer.appendChild(document.getElementById(figure)) : blackPlayer.appendChild(document.getElementById(figure));
     let pickNewFigure = ChooseNewFigure();
     let letter;
-    let chooseTeam;
-    let chooseTeam2;
-    if(playerturn){
-      letter = "w";
-      chooseTeam = 0;
-      chooseTeam2 = 0;
-    }else{
-      letter = "b";
-      chooseTeam = 2;
-      chooseTeam2 = 1;
-    }
+    playerturn ? letter = "w" : letter = "b";
     if(pickNewFigure==1){
-      document.getElementById(field.id).innerHTML += Rook[chooseTeam].tower;
-      document.getElementById(field.id).children[0].id =letter+"Rook"+rookCounter;
-      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+"Rook"+2); //rookCounter. muss eine zahl hier haben die in gamepiece vorhanden ist
+      const newRook = {
+        tower: `<img src="./assets/img/${letter}Rook.png" alt="${letter}Rook${rookCounter}" id="${letter}Rook${rookCounter}" draggable="true" ondragstart="drag(event)">`,
+        id: letter+"Rook"+rookCounter,
+        canWalk: "plus",
+        canAttack: "plus"
+      }
+      Rook.push(newRook);
+      document.getElementById(field.id).innerHTML += Rook[rookCounter].tower;
+      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+"Rook"+rookCounter);
       rookCounter++;
     }else if(pickNewFigure==2){
-      document.getElementById(field.id).innerHTML += Queen[chooseTeam2].tower;
-      document.getElementById(field.id).children[0].id =letter+"Queen"+queenCounter;
-      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+"Queen"+1); 
+      const newQueen = {
+        tower: `<img src="./assets/img/${letter}Queen.png" alt="${letter}Queen${queenCounter}" id="${letter}Queen${queenCounter}" draggable="true" ondragstart="drag(event)">`,
+        id: letter+"Queen"+queenCounter,
+        canWalk: "queen",
+        canAttack: "queen"
+      }
+      Queen.push(newQueen);
+      document.getElementById(field.id).innerHTML += Queen[queenCounter].tower;
+      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+"Queen"+queenCounter); 
       queenCounter++;
     }else if(pickNewFigure==3){
-      document.getElementById(field.id).innerHTML += Knight[chooseTeam].tower;
-      document.getElementById(field.id).children[0].id =letter+"Knight"+knightCounter;
-      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+"Knight"+2); 
+      const newKnight = {
+        tower: `<img src="./assets/img/${letter}Knight.png" alt="${letter}Knight${knightCounter}" id="${letter}Knight${knightCounter}" draggable="true" ondragstart="drag(event)">`,
+        id: letter+"Knight"+knightCounter,
+        canWalk: "jump",
+        canAttack: "jump"
+      }
+      Knight.push(newKnight);
+      document.getElementById(field.id).innerHTML += Knight[knightCounter].tower;
+      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+"Knight"+knightCounter); 
       knightCounter++;
     }else if(pickNewFigure==4){
-      document.getElementById(field.id).innerHTML += Bishop[chooseTeam].tower;
-      document.getElementById(field.id).children[0].id =letter+"Bishop"+bishopCounter;
-      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+"Bishop"+2); 
+      const newBishop = {
+        tower: `<img src="./assets/img/${letter}Bishop.png" alt"${letter}Bishop${bishopCounter}" id="${letter}Bishop${bishopCounter}" draggable="true" ondragstart="drag(event)">`,
+        id: letter+"Bishop"+bishopCounter,
+        canWalk:"cross",
+        canAttack:"cross",
+      }
+      Bishop.push(newBishop);
+      document.getElementById(field.id).innerHTML += Bishop[bishopCounter].tower;
+      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+"Bishop"+bishopCounter); 
       bishopCounter++;
     }
   }

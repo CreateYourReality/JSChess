@@ -1,3 +1,11 @@
+@keyframes pulse {
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
 * {
   margin: 0;
   padding: 0;
@@ -24,14 +32,6 @@ h2 {
 label {
   color: black;
   margin-left: 5px;
-}
-
-.darkmode {
-  background-color: dimgrey;
-}
-
-.showGrid {
-  border: brown 0.1rem solid;
 }
 
 main {
@@ -169,13 +169,12 @@ main .chess-board div {
   height: 60px;
 }
 
-@keyframes pulse {
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
+.darkmode {
+  background-color: dimgrey;
+}
+
+.showGrid {
+  border: brown 0.1rem solid;
 }
 
 /*# sourceMappingURL=style.css.map */
