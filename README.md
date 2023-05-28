@@ -4,13 +4,14 @@
 
 
 # TODO:<br>
-* KNIGHT Attack<br>
-* En passant<br>
-* Rochade<br>
+* ~~KNIGHT Attack~~ ✔️<br>
 * GameOver (Schach & Schachmatt)
 * Nach jedem Zug prüfen ob König(e) im Schach stehen
-* Multiplayer
+* En passant<br>
+* Rochade<br>
 * Time(r)
+* Multiplayer
+
 
 # BUGFIX:
 * ~~Bauer kann an der Startposition Figuren überspringen~~ ✔️<br>
