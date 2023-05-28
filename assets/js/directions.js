@@ -51,7 +51,7 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
       case "plus": PlusAttack(field,player);break;
       case "cross": CrossAttack(field,player);break;
       case "fork": StraightAttack(field,player);
-      case "jump": break;
+      case "jump": break;//JumpAttack(field,player);break;
       case "queen":CrossAttack(field,player);PlusAttack(field,player);AroundAttack(field,player);break;
     }
   }
@@ -93,53 +93,28 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
     return true;
   }
 
-// ######## ATTACK #########
-
-  const CrossAttack = (field,player) => {
-    for(let i = 0; i < 8;i++){
-      if(!SetAttackField(field,directions.forkLeft[0]-i,directions.forkLeft[1]-i,player)){
-        break;
-      }
+//######## ATTACK SECTION #########
+const LoopMe = (field,direction,x,y,player) => {
+  for(let i = 0; i < 8;i++){
+    if(!SetAttackField(field,direction[0]+(i*x),direction[1]+(i*y),player)){
+      break;
     }
-    for(let i = 0; i < 8;i++){
-      if(!SetAttackField(field,directions.forkRight[0]-i,directions.forkRight[1]+i,player)){
-        break;
-      }
-    }
-    for(let i = 0; i < 8;i++){
-      if(!SetAttackField(field,directions.forkRightDown[0]+i,directions.forkRightDown[1]+i,player)){
-        break;
-      }
-    }
-    for(let i = 0; i < 8;i++){
-      if(!SetAttackField(field,directions.forkLeftDown[0]+i,directions.forkLeftDown[1]-i,player)){
-        break;
-      }
-    } 
   }
-
-  const PlusAttack = (field,player) => {
-    for(let i = 0; i < 8;i++){
-      if(!SetAttackField(field,directions.sideLeft[0],directions.sideLeft[1]-i,player)){
-        break;
-      }
-    }
-    for(let i = 0; i < 8;i++){
-      if(!SetAttackField(field,directions.sideRight[0],directions.sideRight[1]+i,player)){
-        break;
-      }
-    }
-    for(let i = 0; i < 8;i++){
-      if(!SetAttackField(field,directions.straight[0]-i,directions.straight[1],player)){
-        break;
-      }
-    }
-    for(let i = 0; i < 8;i++){
-      if(!SetAttackField(field,directions.straightDown[0]+i,directions.straightDown[1],player)){
-        break;
-      }
-    } 
-  }
+}
+//Bishop & Queen attack
+const CrossAttack = (field,player) => {
+  LoopMe(field,directions.forkLeft,-1,-1,player);
+  LoopMe(field,directions.forkRight,-1,1,player);
+  LoopMe(field,directions.forkRightDown,1,1,player);
+  LoopMe(field,directions.forkLeftDown,1,-1,player);
+}
+//Rook & Queen attack
+const PlusAttack = (field,player) => {
+  LoopMe(field,directions.sideLeft,0,-1,player);
+  LoopMe(field,directions.sideRight,0,1,player);
+  LoopMe(field,directions.straight,-1,0,player);
+  LoopMe(field,directions.straightDown,1,0,player);
+}
 
   const AroundMove = (field) => {
     let directionArray = Object.values(directions);
@@ -220,8 +195,16 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
     }
   } */
 
+
+  const JumpAttack = () => {
+    SetAttackField(field,directions.sideLeft[0],directions.sideLeft[1]-i,player)
+  }
+
+
+
+
   //...xD
-  const JumpMove = (field,player) => {
+  const JumpMove = (field) => {
 
     try{
       let first = getDirection(field,directions.straight);
