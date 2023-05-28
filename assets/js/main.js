@@ -13,7 +13,7 @@ let chessBoardFields = [
   ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
   ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"]];
 let activeField = "0";
-let lastActiveField = "empty";
+let lastActiveField = empty;
 let allChessFields = [];
 let activeFieldArray = [];
 let attackFieldArray = [];
@@ -31,7 +31,7 @@ const SetArrayPointer = (x,y,gamepiece) => {
     } */
 
     activeField = field;
-    if(lastActiveField == "empty"){
+    if(lastActiveField == empty){
       lastActiveField = field;
       field.classList.toggle(activeFieldClass);
       return;
@@ -64,24 +64,24 @@ const SetArrayPointer = (x,y,gamepiece) => {
               currentFigure = currentFigure.slice(1,currentFigure.length-1); // Überprüfe ob die Figur vom Weißen(w...) oder Schwarzen(b...) Spieler ist
               if(colorCurrentFigure == redPlayerLetter && playerturn == false){
                 switch(currentFigure){
-                  case "Pawn": ShowFigureOptions(field, "straight", "fork", colorCurrentFigure);break;
-                  case "King": ShowFigureOptions(field, "around", "around", colorCurrentFigure);break;
-                  case "Bishop": ShowFigureOptions(field, "cross", "cross", colorCurrentFigure);break;
-                  case "Rook": ShowFigureOptions(field, "plus", "plus", colorCurrentFigure);break;  
-                  case "Queen": ShowFigureOptions(field, "queen", "queen", colorCurrentFigure);break;  
-                  case "Knight": ShowFigureOptions(field, "jump", "jump", colorCurrentFigure);break;    
+                  case PAWN: ShowFigureOptions(field, straight, fork, colorCurrentFigure);break;
+                  case KING: ShowFigureOptions(field, around, around, colorCurrentFigure);break;
+                  case BISHOP: ShowFigureOptions(field, cross, cross, colorCurrentFigure);break;
+                  case ROOK: ShowFigureOptions(field, plus, plus, colorCurrentFigure);break;  
+                  case QUEEN: ShowFigureOptions(field, queen, queen, colorCurrentFigure);break;  
+                  case KNIGHT: ShowFigureOptions(field, jump, jump, colorCurrentFigure);break;    
                 }
               }
 
               if(colorCurrentFigure == bluePlayerLetter && playerturn == true){
            //     console.log("schwarzer spieler ist dran");
                 switch(currentFigure){
-                  case "Pawn": ShowFigureOptions(field, "straight", "fork", colorCurrentFigure);break;
-                  case "King": ShowFigureOptions(field, "around", "around", colorCurrentFigure);break;
-                  case "Bishop": ShowFigureOptions(field, "cross", "cross", colorCurrentFigure);break;
-                  case "Rook": ShowFigureOptions(field, "plus", "plus", colorCurrentFigure);break;  
-                  case "Queen": ShowFigureOptions(field, "queen", "queen", colorCurrentFigure);break;  
-                  case "Knight": ShowFigureOptions(field, "jump", "jump", colorCurrentFigure);break;    
+                  case PAWN: ShowFigureOptions(field, straight, fork, colorCurrentFigure);break;
+                  case KING: ShowFigureOptions(field, around, around, colorCurrentFigure);break;
+                  case BISHOP: ShowFigureOptions(field, cross, cross, colorCurrentFigure);break;
+                  case ROOK: ShowFigureOptions(field, plus, plus, colorCurrentFigure);break;  
+                  case QUEEN: ShowFigureOptions(field, queen, queen, colorCurrentFigure);break;  
+                  case KNIGHT: ShowFigureOptions(field, jump, jump, colorCurrentFigure);break;    
                 }
               }
             } 
@@ -106,7 +106,7 @@ const SetArrayPointer = (x,y,gamepiece) => {
       if(field != null)
         field.classList.remove(attackFieldClass);
     });
-    lastActiveField = "empty";
+    lastActiveField = empty;
     activeField.classList.toggle(activeFieldClass);
       
   }
@@ -129,7 +129,7 @@ const SetArrayPointer = (x,y,gamepiece) => {
         //idee, jedes mal wenn das feld betreten wurde, +x und fußstapfen einfügen
         let x = LetterToNumber(document.getElementById(data).parentElement.id.slice(0,1));
         let y = document.getElementById(data).parentElement.id.slice(1,2);
-        SetArrayPointer(x,y,"FIELDX"); 
+        SetArrayPointer(x,y,fieldX); 
         ev.target.appendChild(document.getElementById(data));
         SetNewPositions(tempTarget,data);
         PawnPromotion(tempTarget,data);
@@ -140,7 +140,7 @@ const SetArrayPointer = (x,y,gamepiece) => {
           //idee, jedes mal wenn das feld betreten wurde, +x und fußstapfen einfügen
           let x = LetterToNumber(document.getElementById(data).parentElement.id.slice(0,1));
           let y = document.getElementById(data).parentElement.id.slice(1,2);
-          SetArrayPointer(x,y,"FIELDX"); 
+          SetArrayPointer(x,y,fieldX); 
           ev.target.appendChild(document.getElementById(data));
           playerturn ? whitePlayer.appendChild(ev.target.children[0]) : blackPlayer.appendChild(ev.target.children[0]);
           SetNewPositions(tempTarget,data);
@@ -152,7 +152,7 @@ const SetArrayPointer = (x,y,gamepiece) => {
           //idee, jedes mal wenn das feld betreten wurde, +x und fußstapfen einfügen
           let x = LetterToNumber(document.getElementById(data).parentElement.id.slice(0,1));
           let y = document.getElementById(data).parentElement.id.slice(1,2);
-          SetArrayPointer(x,y,"FIELDX"); 
+          SetArrayPointer(x,y,fieldX); 
           tempTarget = ev.target.parentElement;
           playerturn ? whitePlayer.appendChild(ev.target) : blackPlayer.appendChild(ev.target);
           tempTarget.appendChild(document.getElementById(data));

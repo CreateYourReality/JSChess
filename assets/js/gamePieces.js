@@ -215,6 +215,27 @@ const GamePiece = [
   ]
 ]
 
+//wildcards
+const firstChild = ":first-child";
+const cross = "cross";
+const straight = "straight";
+const plus = "plus";
+const around = "around";
+const jump = "jump";
+const queen = "queen";
+const fork = "fork";
+const empty = "empty";
+
+const fieldX = "FIELDX";
+
+const PAWN = "Pawn";
+const QUEEN = "Queen";
+const KING = "King";
+const ROOK = "Rook";
+const BISHOP = "Bishop";
+const KNIGHT = "Knight";
+
+
 const scoreBarPlayer = document.createElement("h2");
 const borderCheckBox = document.createElement("input");
 const darkmodeCheckBox = document.createElement("input");

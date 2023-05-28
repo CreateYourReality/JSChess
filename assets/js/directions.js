@@ -16,29 +16,29 @@ const ShowFigureOptions = (field,moveDir,attDir,enemy) => {
 
 const ShowWhereICanMove = (field,canWalk,enemy) => {
   switch(canWalk){
-    case "cross": CrossMove(field);break;
-    case "straight": StraightMove(field,enemy);break;
-    case "plus": PlusMove(field);break;
-    case "around": AroundMove(field);break;
-    case "jump": JumpMove(field);break;
-    case "queen": CrossMove(field);PlusMove(field); AroundMove(field);break;
+    case cross: CrossMove(field);break;
+    case straight: StraightMove(field,enemy);break;
+    case plus: PlusMove(field);break;
+    case around: AroundMove(field);break;
+    case jump: JumpMove(field);break;
+    case queen: CrossMove(field);PlusMove(field); AroundMove(field);break;
   }
 }
 
 const ShowWhereICanAttack = (field,canAttack,enemy) => {
   switch(canAttack) {
-    case "around": AroundAttack(field,enemy);break;
-    case "plus": PlusAttack(field,enemy);break;
-    case "cross": CrossAttack(field,enemy);break;
-    case "fork": StraightAttack(field,enemy);
-    case "jump": break;//JumpAttack(field,player);break;
-    case "queen":CrossAttack(field,enemy);PlusAttack(field,enemy);AroundAttack(field,enemy);break;
+    case around: AroundAttack(field,enemy);break;
+    case plus: PlusAttack(field,enemy);break;
+    case cross: CrossAttack(field,enemy);break;
+    case fork: StraightAttack(field,enemy);
+    case jump: break;//JumpAttack(field,player);break;
+    case queen:CrossAttack(field,enemy);PlusAttack(field,enemy);AroundAttack(field,enemy);break;
   }
 }
 
 const CanIAttackOnThisField = (field,enemy) => {
   try{
-    let canAttackField = field.querySelector(":first-child").id;
+    let canAttackField = field.querySelector(firstChild).id;
     if(canAttackField.slice(0,1) == enemy){
       field.classList.add(attackFieldClass);
       return true;      
@@ -71,14 +71,14 @@ const SetAttackField = (field,a,b,enemy) => {
   if(attackField !=  null) {
     if(enemy == bluePlayerLetter){
       try{
-        if(attackField.querySelector(":first-child").id.slice(0,1) == redPlayerLetter){
+        if(attackField.querySelector(firstChild).id.slice(0,1) == redPlayerLetter){
           return false;
         }
       }catch(error){/*console.error(error)*/}
     }
     if(enemy == redPlayerLetter){
       try{
-        if(attackField.querySelector(":first-child").id.slice(0,1) == bluePlayerLetter){
+        if(attackField.querySelector(firstChild).id.slice(0,1) == bluePlayerLetter){
           return false;
         } 
       }catch(error){/*console.error(error);*/}
@@ -121,7 +121,7 @@ const AroundAttack = (field,enemy) => {
 }
 //Pawn attack
 const StraightAttack = (field,enemy) => {
-  if(enemy == "b"){
+  if(enemy == redPlayerLetter){
     SetAttackField(field,directions.forkLeft[0],directions.forkLeft[1],enemy);
     SetAttackField(field,directions.forkRight[0],directions.forkRight[1],enemy);
   }else{
@@ -313,49 +313,53 @@ let bishopCounter = 4;
     playerturn ? letter = bluePlayerLetter : letter = redPlayerLetter;
     if(pickNewFigure==1){
       const newRook = {
-        tower: `<img src="./assets/img/${letter}Rook.png" alt="${letter}Rook${rookCounter}" id="${letter}Rook${rookCounter}" draggable="true" ondragstart="drag(event)">`,
-        id: letter+"Rook"+rookCounter,
-        canWalk: "plus",
-        canAttack: "plus"
+        tower: GetTowerText(letter,ROOK,rookCounter),
+        id: letter+ROOK+rookCounter,
+        canWalk: plus,
+        canAttack: plus
       }
       Rook.push(newRook);
       document.getElementById(field.id).innerHTML += Rook[rookCounter].tower;
-      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+"Rook"+rookCounter);
+      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+ROOK+rookCounter);
       rookCounter++;
     }else if(pickNewFigure==2){
       const newQueen = {
-        tower: `<img src="./assets/img/${letter}Queen.png" alt="${letter}Queen${queenCounter}" id="${letter}Queen${queenCounter}" draggable="true" ondragstart="drag(event)">`,
-        id: letter+"Queen"+queenCounter,
-        canWalk: "queen",
-        canAttack: "queen"
+        tower: GetTowerText(letter,QUEEN,queenCounter),
+        id: letter+QUEEN+queenCounter,
+        canWalk: queen,
+        canAttack: queen
       }
       Queen.push(newQueen);
       document.getElementById(field.id).innerHTML += Queen[queenCounter].tower;
-      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+"Queen"+queenCounter); 
+      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+QUEEN+queenCounter); 
       queenCounter++;
     }else if(pickNewFigure==3){
       const newKnight = {
-        tower: `<img src="./assets/img/${letter}Knight.png" alt="${letter}Knight${knightCounter}" id="${letter}Knight${knightCounter}" draggable="true" ondragstart="drag(event)">`,
-        id: letter+"Knight"+knightCounter,
-        canWalk: "jump",
-        canAttack: "jump"
+        tower: GetTowerText(letter,KNIGHT,knightCounter),
+        id: letter+KNIGHT+knightCounter,
+        canWalk: jump,
+        canAttack: jump
       }
       Knight.push(newKnight);
       document.getElementById(field.id).innerHTML += Knight[knightCounter].tower;
-      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+"Knight"+knightCounter); 
+      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+KNIGHT+knightCounter); 
       knightCounter++;
     }else if(pickNewFigure==4){
       const newBishop = {
-        tower: `<img src="./assets/img/${letter}Bishop.png" alt"${letter}Bishop${bishopCounter}" id="${letter}Bishop${bishopCounter}" draggable="true" ondragstart="drag(event)">`,
-        id: letter+"Bishop"+bishopCounter,
-        canWalk:"cross",
-        canAttack:"cross",
+        tower: GetTowerText(letter,BISHOP,bishopCounter),
+        id: letter+BISHOP+bishopCounter,
+        canWalk: cross,
+        canAttack: cross,
       }
       Bishop.push(newBishop);
       document.getElementById(field.id).innerHTML += Bishop[bishopCounter].tower;
-      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+"Bishop"+bishopCounter); 
+      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+BISHOP+bishopCounter); 
       bishopCounter++;
     }
+  }
+
+  const GetTowerText = (letter,figure,counter) => {
+    return `<img src="./assets/img/${letter}${figure}.png" alt="${letter}${figure}${counter}" id="${letter}${figure}${counter}" draggable="true" ondragstart="drag(event)">`;
   }
 
   const EnPassant = () => {
