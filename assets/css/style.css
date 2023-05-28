@@ -156,7 +156,7 @@ main .chess-board aside .infoText {
   color: red;
   text-shadow: black 1px 1px 1px;
   position: absolute;
-  font-size: clamp(1rem, 1.6vw, 2rem);
+  font-size: clamp(1rem, 1.6vw, 1.5rem);
   bottom: -80px;
   font-weight: 900;
   animation: pulse 3s linear infinite;
