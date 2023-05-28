@@ -9,10 +9,12 @@
 * Rochade<br>
 * GameOver (Schach & Schachmatt)
 * Nach jedem Zug prüfen ob König(e) im Schach stehen
+* Multiplayer
+* Time(r)
 
 # BUGFIX:
 * Bauer kann an der Startposition Figuren überspringen<br>
-* Kann nicht laufen nach Bauernumwandlung<br>
+* ~~Kann nicht laufen nach Bauernumwandlung~~ ✔️<br>
 
 # Game Piece Collection
 ![Alt text](/assets/img/Figures.png?raw=true "JS Game Pieces")
