@@ -13,7 +13,7 @@
 * Time(r)
 
 # BUGFIX:
-* Bauer kann an der Startposition Figuren überspringen<br>
+* ~~Bauer kann an der Startposition Figuren überspringen~~ ✔️<br>
 * ~~Kann nicht laufen nach Bauernumwandlung~~ ✔️<br>
 
 # Game Piece Collection
