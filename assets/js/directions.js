@@ -201,6 +201,17 @@ const StraightMove = (field,enemy) => {
     }
   }
 }
+//Knight move
+const JumpMove = (field) => {
+  JumpMoveCalc(field,directions.straight,directions.sideLeft);
+  JumpMoveCalc(field,directions.straight,directions.sideRight);
+  JumpMoveCalc(field,directions.sideRight,directions.straight);
+  JumpMoveCalc(field,directions.sideRight,directions.straightDown);
+  JumpMoveCalc(field,directions.sideLeft,directions.straight);
+  JumpMoveCalc(field,directions.sideLeft,directions.straightDown);
+  JumpMoveCalc(field,directions.straightDown,directions.sideLeft);
+  JumpMoveCalc(field,directions.straightDown,directions.sideRight);
+}
 
 const JumpMoveCalc = (field,fristDirection,secondDirection) => {
   try{
@@ -216,17 +227,6 @@ const JumpMoveCalc = (field,fristDirection,secondDirection) => {
   }catch(error){}  
 }
 
-const JumpMove = (field) => {
-  JumpMoveCalc(field,directions.straight,directions.sideLeft);
-  JumpMoveCalc(field,directions.straight,directions.sideRight);
-  JumpMoveCalc(field,directions.sideRight,directions.straight);
-  JumpMoveCalc(field,directions.sideRight,directions.straightDown);
-  JumpMoveCalc(field,directions.sideLeft,directions.straight);
-  JumpMoveCalc(field,directions.sideLeft,directions.straightDown);
-  JumpMoveCalc(field,directions.straightDown,directions.sideLeft);
-  JumpMoveCalc(field,directions.straightDown,directions.sideRight);
-}
-
 // Bauernumwandlung
 const PawnPromotion = (field,figure) => {
   if(field.id.slice(0,1) == "A" && figure.slice(0,-1) == "wPawn"){
@@ -236,14 +236,26 @@ const PawnPromotion = (field,figure) => {
     GetNewFigure(field,figure);
   }
 }
+
+const GetNewFigure = (field,figure) => {
+  playerturn ? whitePlayer.appendChild(document.getElementById(figure)) : blackPlayer.appendChild(document.getElementById(figure));
+  let pickNewFigure = ChooseNewFigure();
+  let letter =  playerturn ? bluePlayerLetter : redPlayerLetter;
+  switch(pickNewFigure){
+    case 1: CalcNewFigure(letter,ROOK,rookCounter,field,Rook,plus); rookCounter++; break;
+    case 2: CalcNewFigure(letter,QUEEN,queenCounter,field,Queen,queen); queenCounter++;break;
+    case 3: CalcNewFigure(letter,KNIGHT,knightCounter,field,Knight,jump); knightCounter++;break;
+    case 4: CalcNewFigure(letter,BISHOP,bishopCounter,field,Bishop,cross); bishopCounter++;break;
+  }
+}
 //Auswahl einer neuen Figur bei der Bauernumwandlung
 const ChooseNewFigure = () => {
   let chooseNewFigure = prompt(chooseNewFigureText);
     switch(Number(chooseNewFigure)){
-      case 1: console.log("PAWN DIGITIERT ZUUUUUU... ROOOOOOK");return 1;
-      case 2: console.log("PAWN DIGITIERT ZUUUUUU... QUEEEEEN");return 2;
-      case 3: console.log("PAWN DIGITIERT ZUUUUUU... KNIIIGHT");return 3;
-      case 4: console.log("PAWN DIGITIERT ZUUUUUU... BIIISHOP");return 4;
+      case 1:return 1;
+      case 2:return 2;
+      case 3:return 3;
+      case 4:return 4;
       default: ChooseNewFigure();
     }
 }
@@ -261,24 +273,12 @@ const CalcNewFigure = (letter,figure,counter,field,figureObject,move) => {
     console.log(Queen);
 }
 
-const GetNewFigure = (field,figure) => {
-  playerturn ? whitePlayer.appendChild(document.getElementById(figure)) : blackPlayer.appendChild(document.getElementById(figure));
-  let pickNewFigure = ChooseNewFigure();
-  let letter =  playerturn ? bluePlayerLetter : redPlayerLetter;
-  switch(pickNewFigure){
-    case 1: CalcNewFigure(letter,ROOK,rookCounter,field,Rook,plus); rookCounter++; break;
-    case 2: CalcNewFigure(letter,QUEEN,queenCounter,field,Queen,queen); queenCounter++;break;
-    case 3: CalcNewFigure(letter,KNIGHT,knightCounter,field,Knight,jump); knightCounter++;break;
-    case 4: CalcNewFigure(letter,BISHOP,bishopCounter,field,Bishop,cross); bishopCounter++;break;
-  }
-}
-
   const EnPassant = () => {
     //NUR VON BAUERN AUSFÜHRBAR
     //NUR GEGEN BAUERN AUSFÜHRBAR
     //NUR MÖGLICH WENN BRETTHÄLFTE UM GENAU 1 ÜBERQUERT WURDE (w = D | b = E)
     //DER GEGENERBAUER MUSS EINEN DOPPELSCHRITT NEBEN DEINEN BAUERN MACHEN
-    //DER NUR EINEN ZUG DANACH ZEIT
+    //DANN NUR EINEN ZUG DANACH ZEIT
     //WENN ALLES ERFÜLLT : DU KANNST DEN FEINDLICHEN BAUERN EN PASSANT ANGREIFEN (NORMALER ANRIFF UND DANN 1 FELD VORRÜCKEN)
     //(Der Bauer wird geschlagen, als hätte er nur einen einfachen Schritt gemacht)
   }
@@ -298,6 +298,99 @@ const GetNewFigure = (field,figure) => {
     //LANG WEIß: König von H4 nach H6 (zwei Felder) - Turm überspringt dann den König auf H5
     //KURZ SCHWARZ: König von A4 nach H2 (zwei Felder) - Turm überspringt dann den König auf A3
     //LANG SCHWARZ: König von A4 nach H6 (zwei Felder) - Turm überspringt dann den König auf A5
+  }
+
+// CHECK & CHECKMATE (SCAN FOR)
+const CanIScanThisField = (field,enemy) => {
+  try{
+    let canAttackField = field.querySelector(firstChild).id;
+    if(canAttackField.slice(0,1) == enemy){
+      field.classList.add(scanFieldClass);
+      return true;      
+    }else{
+      return false;
+    } 
+  }catch (error){/*console.error(error);*/}
+}
+
+const SetScanField = (field,a,b,enemy) => {
+  let scanField = getDirection(field,[a, b]);
+  if(scanField !=  null) {
+    if(enemy == bluePlayerLetter){
+      try{
+        if(scanField.querySelector(firstChild).id.slice(0,1) == redPlayerLetter){
+          return false;
+        }
+      }catch(error){/*console.error(error)*/}
+    }
+    if(enemy == redPlayerLetter){
+      try{
+        if(scanField.querySelector(firstChild).id.slice(0,1) == bluePlayerLetter){
+          return false;
+        } 
+      }catch(error){/*console.error(error);*/}
+    }
+    if(CanIScanThisField(scanField,enemy)){
+      scanFieldArray.push(scanField);
+      return false;
+    }
+  }
+  return true;
+}
+
+const LoopScan = (field,direction,x,y,enemy) => {
+  for(let i = 0; i < 8;i++){
+    if(!SetScanField(field,direction[0]+(i*x),direction[1]+(i*y),enemy)){
+      break;
+    }
+  }
+}
+
+const JumpScanCalc = (enemy,field,fristDirection,secondDirection) => {
+  try{
+    let jumpField = getDirection(field,fristDirection);
+    if(jumpField != null ){
+      jumpField = getDirection(jumpField,fristDirection);
+      SetScanField(jumpField,secondDirection[0],secondDirection[1],enemy)
+    }
+  }catch(error){}  
+}
+
+const ScanFields = (field,enemy) => {
+  //CROSS SCAN
+  LoopScan(field,directions.forkLeft,-1,-1,enemy);
+  LoopScan(field,directions.forkRight,-1,1,enemy);
+  LoopScan(field,directions.forkRightDown,1,1,enemy);
+  LoopScan(field,directions.forkLeftDown,1,-1,enemy);
+  //PLUS SCAN
+  LoopScan(field,directions.sideLeft,0,-1,enemy);
+  LoopScan(field,directions.sideRight,0,1,enemy);
+  LoopScan(field,directions.straight,-1,0,enemy);
+  LoopScan(field,directions.straightDown,1,0,enemy);
+  //JUMP SCAN
+  JumpScanCalc(enemy,field,directions.straight,directions.sideRight);
+  JumpScanCalc(enemy,field,directions.sideRight,directions.straight);
+  JumpScanCalc(enemy,field,directions.sideRight,directions.straightDown);
+  JumpScanCalc(enemy,field,directions.sideLeft,directions.straight);
+  JumpScanCalc(enemy,field,directions.sideLeft,directions.straightDown);
+  JumpScanCalc(enemy,field,directions.straight,directions.sideLeft);
+  JumpScanCalc(enemy,field,directions.straightDown,directions.sideLeft);
+  JumpScanCalc(enemy,field,directions.straightDown,directions.sideRight);
+}
+
+  const askForCheck = () => {
+    const currentKing = document.getElementById((playerturn ? redPlayerLetter : bluePlayerLetter)+"King1");
+    const enemy = !playerturn ? redPlayerLetter:bluePlayerLetter;
+ //   console.log(currentKing);
+ //   console.log(currentKing.parentElement);
+    ScanFields(currentKing.parentElement,enemy);
+    //! Vom König aus ein alles um ihn herum abtasten, einmal als queen und einmal als jump
+    //* Das Gleiche auch für jedes Feld um ihn herum machen, außer dort steht eine Unit
+    // Muss auch prüfen ob der König nach Bewegung immernoch Bedroht ist
+  }
+
+  const Checkmate = () => {
+
   }
 
  

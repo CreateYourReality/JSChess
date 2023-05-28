@@ -215,6 +215,16 @@ const GamePiece = [
   ]
 ]
 
+let chessBoardFields = [
+  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
+  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
+  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
+  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
+  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
+  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
+  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
+  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"]];
+
 //wildcards
 const firstChild = ":first-child";
 const cross = "cross";
@@ -243,6 +253,7 @@ const main = document.querySelector("main");
 const moveFieldClass = "moveHere";
 const activeFieldClass = "active";
 const attackFieldClass = "canAttack";
+const scanFieldClass = "scanHere";
 const showGridClass = "showGrid";
 const darkModeClass = "darkMode";
 const chessFieldClass = "chessField";
@@ -262,6 +273,20 @@ let rookCounter = 4;
 let queenCounter = 2;
 let knightCounter = 4;
 let bishopCounter = 4;
+
+let activeField = "0";
+let lastActiveField = empty;
+let allChessFields = [];
+let activeFieldArray = [];
+let scanFieldArray = [];
+let attackFieldArray = [];
+let playerturn = false; //false = white | true = black
+
+const chessBoard = document.querySelector(".chess-board");
+const whitePlayer = document.querySelector(".white-player");
+const blackPlayer = document.querySelector(".black-player");
+const chessRows = 8;
+const chessColumns = 8;
 
 const GetTowerText = (letter,figure,counter) => {
   return `<img src="./assets/img/${letter}${figure}.png" alt="${letter}${figure}${counter}" id="${letter}${figure}${counter}" draggable="true" ondragstart="drag(event)">`;
@@ -311,11 +336,7 @@ const CreateNewGame = () => {
 }
 
 const ChangePlayerTurnText = () => {
-  if(playerturn == false){
-    scoreBarPlayer.textContent = blueTurnText;
-  }else {
-    scoreBarPlayer.textContent = redTurnText;
-  }
+  !playerturn ? scoreBarPlayer.textContent = blueTurnText : scoreBarPlayer.textContent = redTurnText;
 }
 
 const ToogleBorder = () => {

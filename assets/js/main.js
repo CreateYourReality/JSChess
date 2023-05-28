@@ -1,23 +1,3 @@
-const chessBoard = document.querySelector(".chess-board");
-const whitePlayer = document.querySelector(".white-player");
-const blackPlayer = document.querySelector(".black-player");
-const chessRows = 8;
-const chessColumns = 8;
-let chessBoardFields = [
-  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
-  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
-  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
-  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
-  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
-  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
-  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"],
-  ["FIELD0","FIELD1","FIELD2","FIELD3","FIELD4","FIELD5","FIELD6","FIELD7"]];
-let activeField = "0";
-let lastActiveField = empty;
-let allChessFields = [];
-let activeFieldArray = [];
-let attackFieldArray = [];
-let playerturn = false; //false = white | true = black
 
 //Packt die Figur in ein Feld in dem Array
 const SetArrayPointer = (x,y,gamepiece) => {
@@ -95,6 +75,7 @@ const SetArrayPointer = (x,y,gamepiece) => {
     playerturn = !playerturn;
  //   playerturn == true ? alert("BLACK") : alert("WHITE");
     ChangePlayerTurnText();
+    askForCheck();
   }
 
   const RemoveActiveFields = () => {
@@ -105,6 +86,10 @@ const SetArrayPointer = (x,y,gamepiece) => {
     attackFieldArray.forEach(field => {
       if(field != null)
         field.classList.remove(attackFieldClass);
+    });
+    scanFieldArray.forEach(field => {
+      if(field != null)
+        field.classList.remove(scanFieldClass);
     });
     lastActiveField = empty;
     activeField.classList.toggle(activeFieldClass);
@@ -131,9 +116,9 @@ const SetArrayPointer = (x,y,gamepiece) => {
         let y = document.getElementById(data).parentElement.id.slice(1,2);
         SetArrayPointer(x,y,fieldX); 
         ev.target.appendChild(document.getElementById(data));
+        RemoveActiveFields();
         SetNewPositions(tempTarget,data);
         PawnPromotion(tempTarget,data);
-        RemoveActiveFields();
         return;  
       }
       if(ev.target.classList.contains(attackFieldClass) && document.getElementById(data).parentElement.classList.contains(activeFieldClass)){
@@ -143,9 +128,9 @@ const SetArrayPointer = (x,y,gamepiece) => {
           SetArrayPointer(x,y,fieldX); 
           ev.target.appendChild(document.getElementById(data));
           playerturn ? whitePlayer.appendChild(ev.target.children[0]) : blackPlayer.appendChild(ev.target.children[0]);
+          RemoveActiveFields();
           SetNewPositions(tempTarget,data);
           PawnPromotion(tempTarget,data);
-          RemoveActiveFields();
           return;
         }
       if(ev.target.parentElement.classList.contains(attackFieldClass) && document.getElementById(data).parentElement.classList.contains(activeFieldClass)){
@@ -156,9 +141,9 @@ const SetArrayPointer = (x,y,gamepiece) => {
           tempTarget = ev.target.parentElement;
           playerturn ? whitePlayer.appendChild(ev.target) : blackPlayer.appendChild(ev.target);
           tempTarget.appendChild(document.getElementById(data));
+          RemoveActiveFields();
           SetNewPositions(tempTarget,data);
           PawnPromotion(tempTarget,data);
-          RemoveActiveFields();
           return;
       }    
     }catch(error){console.error(error)}
