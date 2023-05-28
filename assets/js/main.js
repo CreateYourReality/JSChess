@@ -33,19 +33,19 @@ const SetArrayPointer = (x,y,gamepiece) => {
     activeField = field;
     if(lastActiveField == "empty"){
       lastActiveField = field;
-      field.classList.toggle("active2");
+      field.classList.toggle(activeFieldClass);
       return;
     } 
     if(lastActiveField != activeField){
-      lastActiveField.classList.toggle("active2");
+      lastActiveField.classList.toggle(activeFieldClass);
       lastActiveField = activeField;
       activeFieldArray.forEach(field => {
-        field.classList.remove("active");
+        field.classList.remove(moveFieldClass);
       });
       attackFieldArray.forEach(field => {
-        field.classList.remove("canAttack");
+        field.classList.remove(attackFieldClass);
       });
-      field.classList.toggle("active2");
+      field.classList.toggle(activeFieldClass);
     } 
   }
 
@@ -60,9 +60,9 @@ const SetArrayPointer = (x,y,gamepiece) => {
           gamePiece.forEach(figure => {
             if(figure.id == chessBoardFields[fieldLetter-1][fieldNumber-1]){ //wenn das Feld eine der Figuren enthält
               let currentFigure = figure.id;
-              colorCurrentFigure = currentFigure.slice(0,1) == "w" ? colorCurrentFigure = "b" : colorCurrentFigure = "w";
+              colorCurrentFigure = currentFigure.slice(0,1) == bluePlayerLetter ? colorCurrentFigure = redPlayerLetter : colorCurrentFigure = bluePlayerLetter;
               currentFigure = currentFigure.slice(1,currentFigure.length-1); // Überprüfe ob die Figur vom Weißen(w...) oder Schwarzen(b...) Spieler ist
-              if(colorCurrentFigure == "b" && playerturn == false){
+              if(colorCurrentFigure == redPlayerLetter && playerturn == false){
                 switch(currentFigure){
                   case "Pawn": ShowFigureOptions(field, "straight", "fork", colorCurrentFigure);break;
                   case "King": ShowFigureOptions(field, "around", "around", colorCurrentFigure);break;
@@ -73,7 +73,7 @@ const SetArrayPointer = (x,y,gamepiece) => {
                 }
               }
 
-              if(colorCurrentFigure == "w" && playerturn == true){
+              if(colorCurrentFigure == bluePlayerLetter && playerturn == true){
            //     console.log("schwarzer spieler ist dran");
                 switch(currentFigure){
                   case "Pawn": ShowFigureOptions(field, "straight", "fork", colorCurrentFigure);break;
@@ -100,14 +100,14 @@ const SetArrayPointer = (x,y,gamepiece) => {
   const RemoveActiveFields = () => {
     activeFieldArray.forEach(field => {
       if(field != null)
-        field.classList.remove("active");
+        field.classList.remove(moveFieldClass);
     });
     attackFieldArray.forEach(field => {
       if(field != null)
-        field.classList.remove("canAttack");
+        field.classList.remove(attackFieldClass);
     });
     lastActiveField = "empty";
-    activeField.classList.toggle("active2");
+    activeField.classList.toggle(activeFieldClass);
       
   }
 
@@ -125,7 +125,7 @@ const SetArrayPointer = (x,y,gamepiece) => {
     let data = ev.dataTransfer.getData("text");
     try{
       let tempTarget = ev.target;
-      if(ev.target.classList.contains("active") && document.getElementById(data).parentElement.classList.contains("active2")){
+      if(ev.target.classList.contains(moveFieldClass) && document.getElementById(data).parentElement.classList.contains(activeFieldClass)){
         //idee, jedes mal wenn das feld betreten wurde, +x und fußstapfen einfügen
         let x = LetterToNumber(document.getElementById(data).parentElement.id.slice(0,1));
         let y = document.getElementById(data).parentElement.id.slice(1,2);
@@ -136,7 +136,7 @@ const SetArrayPointer = (x,y,gamepiece) => {
         RemoveActiveFields();
         return;  
       }
-      if(ev.target.classList.contains("canAttack") && document.getElementById(data).parentElement.classList.contains("active2")){
+      if(ev.target.classList.contains(attackFieldClass) && document.getElementById(data).parentElement.classList.contains(activeFieldClass)){
           //idee, jedes mal wenn das feld betreten wurde, +x und fußstapfen einfügen
           let x = LetterToNumber(document.getElementById(data).parentElement.id.slice(0,1));
           let y = document.getElementById(data).parentElement.id.slice(1,2);
@@ -148,7 +148,7 @@ const SetArrayPointer = (x,y,gamepiece) => {
           RemoveActiveFields();
           return;
         }
-      if(ev.target.parentElement.classList.contains("canAttack") && document.getElementById(data).parentElement.classList.contains("active2")){
+      if(ev.target.parentElement.classList.contains(attackFieldClass) && document.getElementById(data).parentElement.classList.contains(activeFieldClass)){
           //idee, jedes mal wenn das feld betreten wurde, +x und fußstapfen einfügen
           let x = LetterToNumber(document.getElementById(data).parentElement.id.slice(0,1));
           let y = document.getElementById(data).parentElement.id.slice(1,2);

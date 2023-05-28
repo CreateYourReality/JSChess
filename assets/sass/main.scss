@@ -120,14 +120,14 @@ main{
             font-size: clamp(1rem,1.2vw,1.3rem);    
         }
         //HERE I CAN MOVE
-        .chessField:nth-child(n+1):nth-child(-n+64).active {
+        .chessField:nth-child(n+1):nth-child(-n+64).moveHere {
             @include fieldDefault();
             background: $ORANGE;
             font-weight: 900;
             font-size: clamp(1rem,1.2vw,1.5rem);
         }
         //HERE I AM OR I CLICKED
-        .chessField:nth-child(n+1):nth-child(-n+64).active2 {
+        .chessField:nth-child(n+1):nth-child(-n+64).active {
             @include fieldDefault();
             background:$ORANGERED;
         }
@@ -176,7 +176,7 @@ main{
     } 
 }
 
-.darkmode{
+.darkMode{
     background-color: $DIMGREY;
 }
 

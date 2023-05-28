@@ -223,10 +223,24 @@ const main = document.querySelector("main");
 const moveFieldClass = "moveHere";
 const activeFieldClass = "active";
 const attackFieldClass = "canAttack";
+const showGridClass = "showGrid";
+const darkModeClass = "darkMode";
+const chessFieldClass = "chessField";
+const infoTextClass = "infoText";
+
+const blueTurnText = "Blue Turn";
+const redTurnText = "Red Turn";
+const darkModeText = "Dark Mode";
+const showGridText = "Show Grid";
+const infoText = "DRAG & DROP TO MOVE AND ATTACK!";
+
+const bluePlayerLetter = "w";
+const redPlayerLetter = "b";
+
 
 const CreateNewGame = () => {
   CreateChessField();
-  allChessFields = document.querySelectorAll(".chessField");
+  allChessFields = document.querySelectorAll("."+chessFieldClass);
   document.getElementById("H4").innerHTML += King[0].tower;
   SetArrayPointer(8,4,"wKing1");
   document.getElementById("H5").innerHTML += Queen[0].tower;
@@ -269,20 +283,20 @@ const CreateNewGame = () => {
 
 const ChangePlayerTurnText = () => {
   if(playerturn == false){
-    scoreBarPlayer.textContent = "BLUE TURN";
+    scoreBarPlayer.textContent = blueTurnText;
   }else {
-    scoreBarPlayer.textContent =  "RED TURN";
+    scoreBarPlayer.textContent = redTurnText;
   }
 }
 
 const ToogleBorder = () => {
     allChessFields.forEach((field) => {
-      field.classList.toggle("showGrid");
+      field.classList.toggle(showGridClass);
     }) 
 }
 
 const ToogleDarkmode = () => {
-  main.classList.toggle("darkmode")
+  main.classList.toggle(darkModeClass)
 }
 
 const CreateChessField = () => {
@@ -292,7 +306,7 @@ const CreateChessField = () => {
         newChessField.setAttribute("ondrop", "drop(event)");
         newChessField.setAttribute("ondragover", 'allowDrop(event)');
         newChessField.id = NumberToLetter(y)+(x+1);
-        newChessField.classList.add("chessField");
+        newChessField.classList.add(chessFieldClass);
         newChessField.textContent = NumberToLetter(y)+(x+1);
         chessBoard.appendChild(newChessField);
     }
@@ -302,18 +316,18 @@ const CreateChessField = () => {
   scoreBar.appendChild(scoreBarPlayer);
   borderCheckBox.addEventListener("click",ToogleBorder);
   borderCheckBox.setAttribute("type","checkbox");
-  borderCheckBox.setAttribute("name","showGrid");
+  borderCheckBox.setAttribute("name",showGridClass);
   darkmodeCheckBox.addEventListener("click",ToogleDarkmode);
   darkmodeCheckBox.setAttribute("type","checkbox");
-  darkmodeCheckBox.setAttribute("name","darkMode");
+  darkmodeCheckBox.setAttribute("name",darkModeClass);
   let div = document.createElement("div");
   let div2 = document.createElement("div"); 
   borderCheckBoxText = document.createElement("label");
   darkmodeCheckBoxText = document.createElement("label");
-  darkmodeCheckBoxText.setAttribute("for","darkMode");
-  borderCheckBoxText.setAttribute("for","showGrid");
-  darkmodeCheckBoxText.textContent = "Dark Mode";
-  borderCheckBoxText.textContent = "Show Grid";
+  darkmodeCheckBoxText.setAttribute("for",darkModeClass);
+  borderCheckBoxText.setAttribute("for",showGridClass);
+  darkmodeCheckBoxText.textContent = darkModeText;
+  borderCheckBoxText.textContent = showGridText;
   div.appendChild(borderCheckBox);
   div.appendChild(borderCheckBoxText);
   div2.appendChild(darkmodeCheckBox);
@@ -321,8 +335,8 @@ const CreateChessField = () => {
   scoreBar.appendChild(div);
   scoreBar.appendChild(div2);
   let pTag = document.createElement("p");
-  pTag.classList.add("infoText");
-  pTag.textContent = "DRAG & DROP TO MOVE AND ATTACK!";
+  pTag.classList.add(infoTextClass);
+  pTag.textContent = infoText;
   scoreBar.appendChild(pTag);
   chessBoard.appendChild(scoreBar)
 }
@@ -335,30 +349,30 @@ function drag(ev) {
   ev.dataTransfer.setData("text", ev.target.id);
 }
 
-  const NumberToLetter = (zahl) =>{
-    switch(zahl){
-        case 0: return "A"; break;
-        case 1: return "B"; break;
-        case 2: return "C"; break;
-        case 3: return "D"; break;
-        case 4: return "E"; break;
-        case 5: return "F"; break;
-        case 6: return "G"; break;
-        case 7: return "H"; break;
-        default : break;
-    }
+const NumberToLetter = (zahl) =>{
+  switch(zahl){
+    case 0: return "A";
+    case 1: return "B";
+    case 2: return "C";
+    case 3: return "D";
+    case 4: return "E";
+    case 5: return "F";
+    case 6: return "G";
+    case 7: return "H";
+    default : break;
+  }
 }
 
 const LetterToNumber = (letter) => {
   switch(letter){
-      case "A": return 1; break;
-      case "B": return 2; break;
-      case "C": return 3; break;
-      case "D": return 4; break;
-      case "E": return 5; break;
-      case "F": return 6; break;
-      case "G": return 7; break;
-      case "H": return 8; break;
-      default : break;
+    case "A": return 1;
+    case "B": return 2;
+    case "C": return 3;
+    case "D": return 4;
+    case "E": return 5;
+    case "F": return 6;
+    case "G": return 7;
+    case "H": return 8;
+    default : break;
   }
 }
