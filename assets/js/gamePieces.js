@@ -218,7 +218,11 @@ const GamePiece = [
 const scoreBarPlayer = document.createElement("h2");
 const borderCheckBox = document.createElement("input");
 const darkmodeCheckBox = document.createElement("input");
-const main = document.querySelector("main"); 
+const main = document.querySelector("main");
+
+const moveFieldClass = "moveHere";
+const activeFieldClass = "active";
+const attackFieldClass = "canAttack";
 
 const CreateNewGame = () => {
   CreateChessField();

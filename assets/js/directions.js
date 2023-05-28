@@ -10,91 +10,88 @@ const directions = {
   }
 
 const ShowFigureOptions = (field,moveDir,attDir,player) => {
-    ShowWhereICanMove(field,moveDir,player);
-    ShowWhereICanAttack(field,attDir,player);
-  }
+  ShowWhereICanMove(field,moveDir,player);
+  ShowWhereICanAttack(field,attDir,player);
+}
 
-  const CanIAttackOnThisField = (field,player) => {
-    try{
-      let canAttackField = field.querySelector(":first-child").id;
-      if(canAttackField.slice(0,1) == player){
-        field.classList.add("canAttack");
-        return true;      
-      }else{
-        return false;
-      } 
-    }catch (error){/*console.error(error);*/}
+const ShowWhereICanMove = (field,canWalk,player) => {
+  switch(canWalk){
+    case "cross": CrossMove(field);break;
+    case "straight": StraightMove(field,player);break;
+    case "plus": PlusMove(field);break;
+    case "around": AroundMove(field);break;
+    case "jump": JumpMove(field);break;
+    case "queen": CrossMove(field);PlusMove(field); AroundMove(field);break;
   }
+}
+
+const ShowWhereICanAttack = (field,canAttack,player) => {
+  switch(canAttack) {
+    case "around": AroundAttack(field,player);break;
+    case "plus": PlusAttack(field,player);break;
+    case "cross": CrossAttack(field,player);break;
+    case "fork": StraightAttack(field,player);
+    case "jump": break;//JumpAttack(field,player);break;
+    case "queen":CrossAttack(field,player);PlusAttack(field,player);AroundAttack(field,player);break;
+  }
+}
+
+const CanIAttackOnThisField = (field,player) => {
+  try{
+    let canAttackField = field.querySelector(":first-child").id;
+    if(canAttackField.slice(0,1) == player){
+      field.classList.add("canAttack");
+      return true;      
+    }else{
+      return false;
+    } 
+  }catch (error){/*console.error(error);*/}
+}
   
-  const getDirection = (field,[x,y]) => {
-    let fieldLetter = Number(LetterToNumber(field.id.slice(0,1)));
-    let fieldNumber = Number(field.id.slice(1,2));
-//    console.log("ich habe geklickt: "+field.id + "("+fieldLetter+" "+fieldNumber+")");
-//    console.log("Auf diesem Feld befindet sich: "+chessBoardFields[fieldLetter-1][fieldNumber-1]);
-    return document.getElementById(NumberToLetter(fieldLetter+x)+String(fieldNumber+y));
-  }
+const getDirection = (field,[x,y]) => {
+  let fieldLetter = Number(LetterToNumber(field.id.slice(0,1)));
+  let fieldNumber = Number(field.id.slice(1,2));
+  return document.getElementById(NumberToLetter(fieldLetter+x)+String(fieldNumber+y));
+}
 
-  const ShowWhereICanMove = (field,canWalk,player) => {
-    switch(canWalk){
-      case "cross": CrossMove(field);break;
-      case "straight": StraightMove(field,player);break;
-      case "plus": PlusMove(field);break;
-      case "around": AroundMove(field);break;
-      case "jump": JumpMove(field);break;
-      case "queen": CrossMove(field);PlusMove(field); AroundMove(field);break;
+const SetMoveField = (field,a,b) => {
+  let activeField = getDirection(field,[a, b]);      
+  if(activeField !=  null){
+    if(activeField.children[0] == undefined){
+      activeField.classList.add("active");
+      activeFieldArray.push(activeField);
+      return true;
     }
+    return false;
   }
+}
 
-  const ShowWhereICanAttack = (field,canAttack,player) => {
-    switch(canAttack) {
-      case "around": AroundAttack(field,player);break;
-      case "plus": PlusAttack(field,player);break;
-      case "cross": CrossAttack(field,player);break;
-      case "fork": StraightAttack(field,player);
-      case "jump": break;//JumpAttack(field,player);break;
-      case "queen":CrossAttack(field,player);PlusAttack(field,player);AroundAttack(field,player);break;
-    }
-  }
-
-  const SetMoveField = (field,a,b) => {
-    let activeField = getDirection(field,[a, b]);      
-    if(activeField !=  null){
-        if(activeField.children[0] == undefined){
-          activeField.classList.add("active");
-          activeFieldArray.push(activeField);
-          return true;
+const SetAttackField = (field,a,b,player) => {
+  let attackField = getDirection(field,[a, b]);
+  if(attackField !=  null) {
+    if(player == "w"){
+      try{
+        if(attackField.querySelector(":first-child").id.slice(0,1) == "b"){
+          return false;
         }
-        return false;
+      }catch(error){/*console.error(error)*/}
+    }
+    if(player == "b"){
+      try{
+        if(attackField.querySelector(":first-child").id.slice(0,1) == "w"){
+          return false;
+        } 
+      }catch(error){/*console.error(error);*/}
+    }
+    if(CanIAttackOnThisField(attackField,player)){
+      attackFieldArray.push(attackField);
+      return false;
     }
   }
-
-  const SetAttackField = (field,a,b,player) => {
-    let attackField = getDirection(field,[a, b]);
-    if(attackField !=  null) {
-      if(player == "w"){
-        try{
-          if(attackField.querySelector(":first-child").id.slice(0,1) == "b"){
-            return false;
-          }
-        }catch(error){/*console.error(error)*/}
-      }
-      if(player == "b"){
-        try{
-          if(attackField.querySelector(":first-child").id.slice(0,1) == "w"){
-            return false;
-          } 
-        }catch(error){/*console.error(error);*/}
-      }
-      if(CanIAttackOnThisField(attackField,player)){
-        attackFieldArray.push(attackField);
-        return false;
-      }
-    }
-    return true;
-  }
-
-//######## ATTACK SECTION #########
-const LoopMe = (field,direction,x,y,player) => {
+  return true;
+}
+// ############################### ATTACK SECTION #####################################
+const LoopAttack = (field,direction,x,y,player) => {
   for(let i = 0; i < 8;i++){
     if(!SetAttackField(field,direction[0]+(i*x),direction[1]+(i*y),player)){
       break;
@@ -103,104 +100,90 @@ const LoopMe = (field,direction,x,y,player) => {
 }
 //Bishop & Queen attack
 const CrossAttack = (field,player) => {
-  LoopMe(field,directions.forkLeft,-1,-1,player);
-  LoopMe(field,directions.forkRight,-1,1,player);
-  LoopMe(field,directions.forkRightDown,1,1,player);
-  LoopMe(field,directions.forkLeftDown,1,-1,player);
+  LoopAttack(field,directions.forkLeft,-1,-1,player);
+  LoopAttack(field,directions.forkRight,-1,1,player);
+  LoopAttack(field,directions.forkRightDown,1,1,player);
+  LoopAttack(field,directions.forkLeftDown,1,-1,player);
 }
 //Rook & Queen attack
 const PlusAttack = (field,player) => {
-  LoopMe(field,directions.sideLeft,0,-1,player);
-  LoopMe(field,directions.sideRight,0,1,player);
-  LoopMe(field,directions.straight,-1,0,player);
-  LoopMe(field,directions.straightDown,1,0,player);
+  LoopAttack(field,directions.sideLeft,0,-1,player);
+  LoopAttack(field,directions.sideRight,0,1,player);
+  LoopAttack(field,directions.straight,-1,0,player);
+  LoopAttack(field,directions.straightDown,1,0,player);
+}
+//King & Queen attack
+const AroundAttack = (field,player) => {
+  let directionArray = Object.values(directions);
+  for(let i = 0; i < directionArray.length; i++){
+    SetAttackField(field,directionArray[i][0],directionArray[i][1],player);
+  }
+}
+//Pawn attack
+const StraightAttack = (field,player) => {
+  if(player == "b"){
+    SetAttackField(field,directions.forkLeft[0],directions.forkLeft[1],player);
+    SetAttackField(field,directions.forkRight[0],directions.forkRight[1],player);
+  }else{
+    SetAttackField(field,directions.forkLeftDown[0],directions.forkLeftDown[1],player);
+    SetAttackField(field,directions.forkRightDown[0],directions.forkRightDown[1],player);
+  }
+}
+//Knight attack
+const JumpAttack = () => {
+//  SetAttackField(field,directions.sideLeft[0],directions.sideLeft[1]-i,player)
 }
 
-  const AroundMove = (field) => {
-    let directionArray = Object.values(directions);
-    for(let i = 0; i < directionArray.length; i++){
-      SetMoveField(field,directionArray[i][0],directionArray[i][1]);
+
+// ############################### MOVEMENT SECTION #####################################
+const LoopMove = (field,direction,x,y) => {
+  for(let i = 0; i < 8;i++){
+    if(!SetMoveField(field,direction[0]+(i*x),direction[1]+(i*y))){
+      break;
     }
   }
-
-  const AroundAttack = (field,player) => {
-    let directionArray = Object.values(directions);
-    for(let i = 0; i < directionArray.length; i++){
-      SetAttackField(field,directionArray[i][0],directionArray[i][1],player);
+}
+// Bishop & Queen move
+const CrossMove = (field) => {
+  LoopMove(field,directions.forkLeft,-1,-1);
+  LoopMove(field,directions.forkRight,-1,+1);
+  LoopMove(field,directions.forkRightDown,+1,+1);
+  LoopMove(field,directions.forkLeftDown,+1,-1);
+}
+// Rook & Queen move
+const PlusMove = (field) => {
+  LoopMove(field,directions.sideLeft,0,-1);
+  LoopMove(field,directions.sideRight,0,+1);
+  LoopMove(field,directions.straight,-1,0);
+  LoopMove(field,directions.straightDown,+1,0);
+}
+//King & Queen move
+const AroundMove = (field) => {
+  let directionArray = Object.values(directions);
+  for(let i = 0; i < directionArray.length; i++){
+    SetMoveField(field,directionArray[i][0],directionArray[i][1]);
+  }
+}
+//Pawn move
+const StraightMove = (field,enemy) => {
+  if(enemy == "b"){
+    SetMoveField(field,directions.straight[0],directions.straight[1]);
+    if(field.id.slice(0,1) == "G"){ //Blauer Spieler hat sein Bauern noch nicht bewegt
+      const newField = getDirection(field,directions.straight);
+      if(newField.children[0] == undefined){
+        SetMoveField(newField,directions.straight[0],directions.straight[1]); 
+      } 
+    }
+  }else{
+    SetMoveField(field,directions.straightDown[0],directions.straightDown[1]);
+    if(field.id.slice(0,1) == "B"){ //Roter Spieler hat sein Bauern noch nicht bewegt
+      const newField = getDirection(field,directions.straightDown);
+      if(newField.children[0] == undefined){
+        SetMoveField(newField,directions.straightDown[0],directions.straightDown[1]);
+      }
     }
   }
-  
-  const StraightAttack = (field,player) => {
-    if(player == "b"){
-      SetAttackField(field,directions.forkLeft[0],directions.forkLeft[1],player);
-      SetAttackField(field,directions.forkRight[0],directions.forkRight[1],player);
-    }else{
-      SetAttackField(field,directions.forkLeftDown[0],directions.forkLeftDown[1],player);
-      SetAttackField(field,directions.forkRightDown[0],directions.forkRightDown[1],player);
-    }
-  }
-
-// ######## MOVEMENT #########
-  const CrossMove = (field) => {
-    for(let i = 0; i < 8;i++){
-      if(!SetMoveField(field,directions.forkLeft[0]-i,directions.forkLeft[1]-i)){
-        break;
-      }
-    }
-    for(let i = 0; i < 8;i++){
-      if(!SetMoveField(field,directions.forkRight[0]-i,directions.forkRight[1]+i)){
-        break;
-      }
-    }
-    for(let i = 0; i < 8;i++){
-      if(!SetMoveField(field,directions.forkRightDown[0]+i,directions.forkRightDown[1]+i)){
-        break;
-      }
-    }
-    for(let i = 0; i < 8;i++){
-      if(!SetMoveField(field,directions.forkLeftDown[0]+i,directions.forkLeftDown[1]-i)){
-        break;
-      }
-    } 
-  }
-
-  const PlusMove = (field) => {
-    for(let i = 0; i < 8;i++){
-      if(!SetMoveField(field,directions.sideLeft[0],directions.sideLeft[1]-i)){
-        break;
-      }
-    }
-    for(let i = 0; i < 8;i++){
-      if(!SetMoveField(field,directions.sideRight[0],directions.sideRight[1]+i)){
-        break;
-      }
-    }
-    for(let i = 0; i < 8;i++){
-      if(!SetMoveField(field,directions.straight[0]-i,directions.straight[1])){
-        break;
-      }  
-    }
-    for(let i = 0; i < 8;i++){
-      if(!SetMoveField(field,directions.straightDown[0]+i,directions.straightDown[1])){
-        break;
-      }  
-    } 
-  }
-
- /* const SetJumpField = (field,a,b) => {
-    let activeField = getDirection(field,[a, b]);      
-    if(activeField !=  null){
-          activeField.classList.add("active");
-          activeFieldArray.push(activeField);
-    }
-  } */
-
-
-  const JumpAttack = () => {
-    SetAttackField(field,directions.sideLeft[0],directions.sideLeft[1]-i,player)
-  }
-
-
+}
 
 
   //...xD
@@ -297,21 +280,31 @@ const PlusAttack = (field,player) => {
     }catch(error){} 
   }
 
-  const ChooseNewFigure = () => {
-    let chooseNewFigure = prompt("In was soll sich der Bauer verwandeln? [1]ROOK [2]QUEEN [3]KNIGHT [4]BISHOP");
-      switch(Number(chooseNewFigure)){
-        case 1: console.log("PAWN DIGITIERT ZUUUUUU... ROOOOOOK");return 1;
-        case 2: console.log("PAWN DIGITIERT ZUUUUUU... QUEEEEEN");return 2;
-        case 3: console.log("PAWN DIGITIERT ZUUUUUU... KNIIIGHT");return 3;
-        case 4: console.log("PAWN DIGITIERT ZUUUUUU... BIIISHOP");return 4;
-        default: ChooseNewFigure();
-      }
+// Bauernumwandlung
+const PawnPromotion = (field,figure) => {
+  if(field.id.slice(0,1) == "A" && figure.slice(0,-1) == "wPawn"){
+    GetNewFigure(field,figure);
   }
+  if(field.id.slice(0,1) == "H" && figure.slice(0,-1) == "bPawn"){
+    GetNewFigure(field,figure);
+  }
+}
+//Auswahl einer neuen Figur bei der Bauernumwandlung
+const ChooseNewFigure = () => {
+  let chooseNewFigure = prompt("In was soll sich der Bauer verwandeln? [1]ROOK [2]QUEEN [3]KNIGHT [4]BISHOP");
+    switch(Number(chooseNewFigure)){
+      case 1: console.log("PAWN DIGITIERT ZUUUUUU... ROOOOOOK");return 1;
+      case 2: console.log("PAWN DIGITIERT ZUUUUUU... QUEEEEEN");return 2;
+      case 3: console.log("PAWN DIGITIERT ZUUUUUU... KNIIIGHT");return 3;
+      case 4: console.log("PAWN DIGITIERT ZUUUUUU... BIIISHOP");return 4;
+      default: ChooseNewFigure();
+    }
+}
 
-  let rookCounter = 4;
-  let queenCounter = 2;
-  let knightCounter = 4;
-  let bishopCounter = 4;
+let rookCounter = 4;
+let queenCounter = 2;
+let knightCounter = 4;
+let bishopCounter = 4;
 
   const GetNewFigure = (field,figure) => {
     playerturn ? whitePlayer.appendChild(document.getElementById(figure)) : blackPlayer.appendChild(document.getElementById(figure));
@@ -392,35 +385,6 @@ const PlusAttack = (field,player) => {
     //LANG SCHWARZ: König von A4 nach H6 (zwei Felder) - Turm überspringt dann den König auf A5
   }
 
-  // Bauernumwandlung
-  const PawnPromotion = (field,figure) => {
-    if(field.id.slice(0,1) == "A" && figure.slice(0,-1) == "wPawn"){
-      console.log("w choose your new figure");
-      GetNewFigure(field,figure);
-    }
+ 
 
-    if(field.id.slice(0,1) == "H" && figure.slice(0,-1) == "bPawn"){
-      console.log("b choose your new figure");
-      GetNewFigure(field,figure);
-    }
-  }
-
-  const StraightMove = (field,enemy) => {
-    if(enemy == "b"){
-      SetMoveField(field,directions.straight[0],directions.straight[1]);
-      if(field.id.slice(0,1) == "G"){ //Blauer Spieler hat sein Bauern noch nicht bewegt
-        const newField = getDirection(field,directions.straight);
-        if(newField.children[0] == undefined){
-          SetMoveField(newField,directions.straight[0],directions.straight[1]); 
-        } 
-      }
-    }else{
-      SetMoveField(field,directions.straightDown[0],directions.straightDown[1]);
-      if(field.id.slice(0,1) == "B"){ //Roter Spieler hat sein Bauern noch nicht bewegt
-        const newField = getDirection(field,directions.straightDown);
-        if(newField.children[0] == undefined){
-          SetMoveField(newField,directions.straightDown[0],directions.straightDown[1]);
-        }
-      }
-    }
-  }
+  
