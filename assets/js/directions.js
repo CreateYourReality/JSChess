@@ -427,13 +427,17 @@ const ShowFigureOptions = (field,moveDir,attDir,player) => {
       SetMoveField(field,directions.straight[0],directions.straight[1]);
       if(field.id.slice(0,1) == "G"){ //Blauer Spieler hat sein Bauern noch nicht bewegt
         const newField = getDirection(field,directions.straight);
-        SetMoveField(newField,directions.straight[0],directions.straight[1]);  
+        if(newField.children[0] == undefined){
+          SetMoveField(newField,directions.straight[0],directions.straight[1]); 
+        } 
       }
     }else{
       SetMoveField(field,directions.straightDown[0],directions.straightDown[1]);
       if(field.id.slice(0,1) == "B"){ //Roter Spieler hat sein Bauern noch nicht bewegt
         const newField = getDirection(field,directions.straightDown);
-        SetMoveField(newField,directions.straightDown[0],directions.straightDown[1]);
+        if(newField.children[0] == undefined){
+          SetMoveField(newField,directions.straightDown[0],directions.straightDown[1]);
+        }
       }
     }
   }
