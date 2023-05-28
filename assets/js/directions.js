@@ -30,7 +30,7 @@ const ShowWhereICanAttack = (field,canAttack,enemy) => {
     case around: AroundAttack(field,enemy);break;
     case plus: PlusAttack(field,enemy);break;
     case cross: CrossAttack(field,enemy);break;
-    case fork: StraightAttack(field,enemy);
+    case fork: StraightAttack(field,enemy);break;
     case jump: JumpAttack(field,enemy);break;
     case queen:CrossAttack(field,enemy);PlusAttack(field,enemy);AroundAttack(field,enemy);break;
   }
@@ -129,6 +129,7 @@ const StraightAttack = (field,enemy) => {
     SetAttackField(field,directions.forkRightDown[0],directions.forkRightDown[1],enemy);
   }
 }
+
 //Knight attack
 const JumpAttack = (field, enemy) => {
   JumpAttackCalc(enemy,field,directions.straight,directions.sideLeft);
