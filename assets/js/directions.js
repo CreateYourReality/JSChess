@@ -31,7 +31,7 @@ const ShowWhereICanAttack = (field,canAttack,enemy) => {
     case plus: PlusAttack(field,enemy);break;
     case cross: CrossAttack(field,enemy);break;
     case fork: StraightAttack(field,enemy);
-    case jump: break;//JumpAttack(field,player);break;
+    case jump: JumpAttack(field,enemy);break;
     case queen:CrossAttack(field,enemy);PlusAttack(field,enemy);AroundAttack(field,enemy);break;
   }
 }
@@ -130,10 +130,26 @@ const StraightAttack = (field,enemy) => {
   }
 }
 //Knight attack
-const JumpAttack = () => {
-//  SetAttackField(field,directions.sideLeft[0],directions.sideLeft[1]-i,player)
+const JumpAttack = (field, enemy) => {
+  JumpAttackCalc(enemy,field,directions.straight,directions.sideLeft);
+  JumpAttackCalc(enemy,field,directions.straight,directions.sideRight);
+  JumpAttackCalc(enemy,field,directions.sideRight,directions.straight);
+  JumpAttackCalc(enemy,field,directions.sideRight,directions.straightDown);
+  JumpAttackCalc(enemy,field,directions.sideLeft,directions.straight);
+  JumpAttackCalc(enemy,field,directions.sideLeft,directions.straightDown);
+  JumpAttackCalc(enemy,field,directions.straightDown,directions.sideLeft);
+  JumpAttackCalc(enemy,field,directions.straightDown,directions.sideRight);
 }
 
+const JumpAttackCalc = (enemy,field,fristDirection,secondDirection) => {
+  try{
+    let jumpField = getDirection(field,fristDirection);
+    if(jumpField != null ){
+      jumpField = getDirection(jumpField,fristDirection);
+      SetAttackField(jumpField,secondDirection[0],secondDirection[1],enemy)
+    }
+  }catch(error){}  
+}
 
 // ############################### MOVEMENT SECTION #####################################
 const LoopMove = (field,direction,x,y) => {
@@ -184,8 +200,6 @@ const StraightMove = (field,enemy) => {
     }
   }
 }
-
-
 
 const JumpMoveCalc = (field,fristDirection,secondDirection) => {
   try{
