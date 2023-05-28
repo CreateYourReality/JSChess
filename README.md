@@ -9,6 +9,8 @@
 * Rochade<br>
 * GameOver (Schach & Schachmatt)
 * Nach jedem Zug prüfen ob König(e) im Schach stehen
+* Multiplayer
+* Time(r)
 
 # BUGFIX:
 * Bauer kann an der Startposition Figuren überspringen<br>
