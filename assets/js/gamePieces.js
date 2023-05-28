@@ -235,7 +235,6 @@ const ROOK = "Rook";
 const BISHOP = "Bishop";
 const KNIGHT = "Knight";
 
-
 const scoreBarPlayer = document.createElement("h2");
 const borderCheckBox = document.createElement("input");
 const darkmodeCheckBox = document.createElement("input");
@@ -254,10 +253,19 @@ const redTurnText = "Red Turn";
 const darkModeText = "Dark Mode";
 const showGridText = "Show Grid";
 const infoText = "DRAG & DROP TO MOVE AND ATTACK!";
+const chooseNewFigureText = "Bauernumwandlung - [1]ROOK [2]QUEEN [3]KNIGHT [4]BISHOP";
 
 const bluePlayerLetter = "w";
 const redPlayerLetter = "b";
 
+let rookCounter = 4;
+let queenCounter = 2;
+let knightCounter = 4;
+let bishopCounter = 4;
+
+const GetTowerText = (letter,figure,counter) => {
+  return `<img src="./assets/img/${letter}${figure}.png" alt="${letter}${figure}${counter}" id="${letter}${figure}${counter}" draggable="true" ondragstart="drag(event)">`;
+}
 
 const CreateNewGame = () => {
   CreateChessField();

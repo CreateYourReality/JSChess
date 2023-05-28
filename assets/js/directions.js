@@ -291,7 +291,7 @@ const PawnPromotion = (field,figure) => {
 }
 //Auswahl einer neuen Figur bei der Bauernumwandlung
 const ChooseNewFigure = () => {
-  let chooseNewFigure = prompt("In was soll sich der Bauer verwandeln? [1]ROOK [2]QUEEN [3]KNIGHT [4]BISHOP");
+  let chooseNewFigure = prompt(chooseNewFigureText);
     switch(Number(chooseNewFigure)){
       case 1: console.log("PAWN DIGITIERT ZUUUUUU... ROOOOOOK");return 1;
       case 2: console.log("PAWN DIGITIERT ZUUUUUU... QUEEEEEN");return 2;
@@ -301,66 +301,30 @@ const ChooseNewFigure = () => {
     }
 }
 
-let rookCounter = 4;
-let queenCounter = 2;
-let knightCounter = 4;
-let bishopCounter = 4;
-
-  const GetNewFigure = (field,figure) => {
-    playerturn ? whitePlayer.appendChild(document.getElementById(figure)) : blackPlayer.appendChild(document.getElementById(figure));
-    let pickNewFigure = ChooseNewFigure();
-    let letter;
-    playerturn ? letter = bluePlayerLetter : letter = redPlayerLetter;
-    if(pickNewFigure==1){
-      const newRook = {
-        tower: GetTowerText(letter,ROOK,rookCounter),
-        id: letter+ROOK+rookCounter,
-        canWalk: plus,
-        canAttack: plus
-      }
-      Rook.push(newRook);
-      document.getElementById(field.id).innerHTML += Rook[rookCounter].tower;
-      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+ROOK+rookCounter);
-      rookCounter++;
-    }else if(pickNewFigure==2){
-      const newQueen = {
-        tower: GetTowerText(letter,QUEEN,queenCounter),
-        id: letter+QUEEN+queenCounter,
-        canWalk: queen,
-        canAttack: queen
-      }
-      Queen.push(newQueen);
-      document.getElementById(field.id).innerHTML += Queen[queenCounter].tower;
-      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+QUEEN+queenCounter); 
-      queenCounter++;
-    }else if(pickNewFigure==3){
-      const newKnight = {
-        tower: GetTowerText(letter,KNIGHT,knightCounter),
-        id: letter+KNIGHT+knightCounter,
-        canWalk: jump,
-        canAttack: jump
-      }
-      Knight.push(newKnight);
-      document.getElementById(field.id).innerHTML += Knight[knightCounter].tower;
-      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+KNIGHT+knightCounter); 
-      knightCounter++;
-    }else if(pickNewFigure==4){
-      const newBishop = {
-        tower: GetTowerText(letter,BISHOP,bishopCounter),
-        id: letter+BISHOP+bishopCounter,
-        canWalk: cross,
-        canAttack: cross,
-      }
-      Bishop.push(newBishop);
-      document.getElementById(field.id).innerHTML += Bishop[bishopCounter].tower;
-      SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+BISHOP+bishopCounter); 
-      bishopCounter++;
+const CalcNewFigure = (letter,figure,counter,field,figureObject,move) => {
+    const newFigure = {
+      tower: GetTowerText(letter,figure,counter),
+      id: letter+figure+counter,
+      canWalk: move,
+      canAttack: move
     }
-  }
+    figureObject.push(newFigure);
+    document.getElementById(field.id).innerHTML += figureObject[counter].tower;
+    SetArrayPointer(LetterToNumber(field.id.slice(0,1)),field.id.slice(1,2),letter+figure+counter);
+    console.log(Queen);
+}
 
-  const GetTowerText = (letter,figure,counter) => {
-    return `<img src="./assets/img/${letter}${figure}.png" alt="${letter}${figure}${counter}" id="${letter}${figure}${counter}" draggable="true" ondragstart="drag(event)">`;
+const GetNewFigure = (field,figure) => {
+  playerturn ? whitePlayer.appendChild(document.getElementById(figure)) : blackPlayer.appendChild(document.getElementById(figure));
+  let pickNewFigure = ChooseNewFigure();
+  let letter =  playerturn ? bluePlayerLetter : redPlayerLetter;
+  switch(pickNewFigure){
+    case 1: CalcNewFigure(letter,ROOK,rookCounter,field,Rook,plus); rookCounter++; break;
+    case 2: CalcNewFigure(letter,QUEEN,queenCounter,field,Queen,queen); queenCounter++;break;
+    case 3: CalcNewFigure(letter,KNIGHT,knightCounter,field,Knight,jump); knightCounter++;break;
+    case 4: CalcNewFigure(letter,BISHOP,bishopCounter,field,Bishop,cross); bishopCounter++;break;
   }
+}
 
   const EnPassant = () => {
     //NUR VON BAUERN AUSFÜHRBAR
