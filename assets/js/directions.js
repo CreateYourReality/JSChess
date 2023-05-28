@@ -186,99 +186,31 @@ const StraightMove = (field,enemy) => {
 }
 
 
-  //...xD
-  const JumpMove = (field) => {
 
-    try{
-      let first = getDirection(field,directions.straight);
-      if(first != null ){
-        first = getDirection(first,directions.straight);
-        first = getDirection(first,directions.sideLeft);
-        if(first.children[0] == undefined){
-          activeFieldArray.push(first);
-          first.classList.add(moveFieldClass);
-        }
-      }
-    }catch(error){}
+const JumpMoveCalc = (field,fristDirection,secondDirection) => {
   try{
-      let second = getDirection(field,directions.straight);
-      if(second != null ){
-        second = getDirection(second,directions.straight);
-        second = getDirection(second,directions.sideRight);
-        if(second.children[0] == undefined){
-          activeFieldArray.push(second);
-          second.classList.add(moveFieldClass);
-        }
+    let jumpField = getDirection(field,fristDirection);
+    if(jumpField != null ){
+      jumpField = getDirection(jumpField,fristDirection);
+      jumpField = getDirection(jumpField,secondDirection);
+      if(jumpField.children[0] == undefined){
+        activeFieldArray.push(jumpField);
+        jumpField.classList.add(moveFieldClass);
       }
-    }catch(error){}
-    try{
-      let third = getDirection(field,directions.sideRight);
-      if(third != null){
-        third = getDirection(third,directions.sideRight);
-        third = getDirection(third,directions.straight);
-        if(third.children[0] == undefined){
-          activeFieldArray.push(third);
-          third.classList.add(moveFieldClass);
-        }
-      }
-    }catch(error){}
-   try{
-      let fourth = getDirection(field,directions.sideLeft);
-      if(fourth != null){
-        fourth = getDirection(fourth,directions.sideLeft);
-        fourth = getDirection(fourth,directions.straight);
-        if(fourth.children[0] == undefined){
-          activeFieldArray.push(fourth);
-          fourth.classList.add(moveFieldClass);
-        }
-      }
-    }catch(error){}
-     try{
-      let fifth = getDirection(field,directions.sideLeft);
-      if(fifth != null){
-        fifth = getDirection(fifth,directions.sideLeft);
-        fifth = getDirection(fifth,directions.straightDown);
-        if(fifth.children[0] == undefined){
-          activeFieldArray.push(fifth);
-          fifth.classList.add(moveFieldClass);
-        }
-      }
-    }catch(error){}
-    
-    try{
-      let six = getDirection(field,directions.sideRight);
-      if(six != null){
-        six = getDirection(six,directions.sideRight);
-        six = getDirection(six,directions.straightDown);
-        if(six.children[0] == undefined){
-          activeFieldArray.push(six);
-          six.classList.add(moveFieldClass);
-        }
-      }
-    }catch(error){} 
-    try{
-      let seven = getDirection(field,directions.straightDown);
-      if(seven != null){
-        seven = getDirection(seven,directions.straightDown);
-        seven = getDirection(seven,directions.sideLeft);
-        if(seven.children[0] == undefined){
-          activeFieldArray.push(seven);
-          seven.classList.add(moveFieldClass);
-        }
-      }
-    }catch(error){}
-    try{
-      let eight = getDirection(field,directions.straightDown);
-      if(eight != null){
-        eight = getDirection(eight,directions.straightDown);
-        eight = getDirection(eight,directions.sideRight);
-        if(eight.children[0] == undefined){
-          activeFieldArray.push(eight);
-          eight.classList.add(moveFieldClass);
-        }
     }
-    }catch(error){} 
-  }
+  }catch(error){}  
+}
+
+const JumpMove = (field) => {
+  JumpMoveCalc(field,directions.straight,directions.sideLeft);
+  JumpMoveCalc(field,directions.straight,directions.sideRight);
+  JumpMoveCalc(field,directions.sideRight,directions.straight);
+  JumpMoveCalc(field,directions.sideRight,directions.straightDown);
+  JumpMoveCalc(field,directions.sideLeft,directions.straight);
+  JumpMoveCalc(field,directions.sideLeft,directions.straightDown);
+  JumpMoveCalc(field,directions.straightDown,directions.sideLeft);
+  JumpMoveCalc(field,directions.straightDown,directions.sideRight);
+}
 
 // Bauernumwandlung
 const PawnPromotion = (field,figure) => {
