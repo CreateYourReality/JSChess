@@ -88,7 +88,7 @@ main .chess-board .chessField:nth-child(n+33):nth-child(-n+40):nth-child(odd),
 main .chess-board .chessField:nth-child(n+41):nth-child(-n+48):nth-child(even),
 main .chess-board .chessField:nth-child(n+49):nth-child(-n+56):nth-child(odd),
 main .chess-board .chessField:nth-child(n+57):nth-child(-n+64):nth-child(even) {
-  background: url("../img/GrasTile2.png") no-repeat center;
+  background: url("../img/StoneFloorDark.png") no-repeat center;
   background-size: contain;
 }
 main .chess-board .chessField:nth-child(n+1):nth-child(-n+8):nth-child(even),

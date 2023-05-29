@@ -98,7 +98,8 @@ main{
         .chessField:nth-child(n+41):nth-child(-n+48):nth-child(EVEN),
         .chessField:nth-child(n+49):nth-child(-n+56):nth-child(ODD),
         .chessField:nth-child(n+57):nth-child(-n+64):nth-child(EVEN){
-            background: url("../img/GrasTile2.png") no-repeat center;
+      //      background: url("../img/GrasTile2.png") no-repeat center;
+            background: url("../img/StoneFloorDark.png") no-repeat center;
             background-size: contain;
         }
 
@@ -111,6 +112,7 @@ main{
         .chessField:nth-child(n+49):nth-child(-n+56):nth-child(EVEN),
         .chessField:nth-child(n+57):nth-child(-n+64):nth-child(ODD){
             background: url("../img/DirtTile.png") no-repeat center;
+      //      background: url("../img/StoneFloorLight.png") no-repeat center;
             background-size: contain;
         }
         //ALLG. HOVER
